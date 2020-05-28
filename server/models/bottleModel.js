@@ -12,11 +12,9 @@ var BottleSchema = new mongoose.Schema({
   },
   fillPercent: {
     type: Number,
-    required: true,
   },
   batteryPercent: {
     type: Number,
-    required: true,
   },
   contents: {
     type: String,

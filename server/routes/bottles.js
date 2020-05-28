@@ -9,15 +9,45 @@ var config = require('./../config');
 
 /* GET current bottles */
 router.get("/", VerifyToken, function(req, res, next) {
-    Bottle.find({"userId": { "$all": req.userId}})
-        .then(function (bottles) {
-            returnList = [];
-            bottles.map((bottle) => {
-                returnList.push(bottle)
-            });
-            res.status(200).json(returnList);
+    Bottle.find({"userId": { "$all": req.userId}}, (err, bottles) => {
+        if (err) {
+            console.log(err);
+            return res.json({
+                message: "Bottle get failed",
+                error: err,
+                status: 500
+            }); 
+        }
+        returnList = [];
+        bottles.map((bottle) => {
+            returnList.push(bottle)
+        });
+        res.status(200).json(returnList);
         }
     );
+});
+
+router.post("/create", VerifyToken, function(req, res, next) {
+    if (req.body.name &&
+        req.body.contents) {
+        data = {
+            userId: req.userId,
+            name : req.body.name,
+            fillPercent: (req.body.fillPercent) ? req.body.fillPercent : null,
+            batteryPercent: (req.body.batteryPercent) ? req.body.batteryPercent : null,
+            contents : req.body.contents,
+            active : true,
+            };
+
+        Bottle.create(data,
+            function (err, bottle) {
+            if (err) return res.status(500).json({"Error": "There was an error creating the bottle. " + err})
+            
+            res.status(200).json({"bottle": bottle});
+            });	
+    } else {
+        return res.status(500).json({"Error": "There was a problem creating the bottle. Not all required fields present"});
+    }
 });
 
 /* GET specific bottle for current user*/

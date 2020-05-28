@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Order = require('./../models/orderModel');
+var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var VerifyToken = require('./../controllers/VerifyToken');
@@ -34,7 +35,7 @@ router.get("/:orderId", VerifyToken, function(req, res, next) {
 });
 
 
-export function updateOrder(orderId, update) {
+function updateOrder(orderId, update) {
     let filter = {"_id": orderId};
 
     order.findOneAndUpdate(filter, update, { runValidators: true }, (err, order) => {
