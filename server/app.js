@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/auth', usersRouter);
 app.use('/files', fileRouter);
 app.use('/bottles', bottlesRouter);
 app.use('/order', orderRouter);

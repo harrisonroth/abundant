@@ -23,7 +23,7 @@ router.get("/", VerifyToken, function(req, res, next) {
 /* GET specific order for current user*/
 router.get("/:orderId", VerifyToken, function(req, res, next) {
     var orderId = req.params.orderId;
-    order.find({"_id": orderId})
+    Order.find({"_id": orderId})
         .then(function (order) {
             if (order.userId == req.userId) {
                 res.status(200).json(order);
@@ -33,19 +33,5 @@ router.get("/:orderId", VerifyToken, function(req, res, next) {
         }
     );
 });
-
-
-function updateOrder(orderId, update) {
-    let filter = {"_id": orderId};
-
-    order.findOneAndUpdate(filter, update, { runValidators: true }, (err, order) => {
-        if (err) return res.json({
-            message: "Order update failed",
-            error: err,
-            status: 500
-        });
-        res.status(200).json(order);
-    });
-}
 
 module.exports = router;

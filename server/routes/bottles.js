@@ -66,17 +66,19 @@ router.get("/:bottleId", VerifyToken, function(req, res, next) {
 
 /* POST update bottle name */
 router.post("/:bottleId", VerifyToken, function(req, res, next) {
-    let bottleId = req.params.bottleId;
-    let filter = {"_id": bottleId, "userId": req.userId};
-    let update = {"name" : req.body.name};
-    Bottle.findOneAndUpdate(filter, update, { runValidators: true }, (err, bottle) => {
-        if (err) return res.json({
-            message: "Bottle update failed",
-            error: err,
-            status: 500
+    if (req.body.name) {
+        let bottleId = req.params.bottleId;
+        let filter = {"_id": bottleId, "userId": req.userId};
+        let update = {"name" : req.body.name};
+        Bottle.findOneAndUpdate(filter, update, { runValidators: true }, (err, bottle) => {
+            if (err) return res.json({
+                message: "Bottle update failed",
+                error: err,
+                status: 500
+            });
+            res.status(200).json(bottle);
         });
-        res.status(200).json(bottle);
-    });
+    }
 });
 
 /* GET set bottle to inactive */
