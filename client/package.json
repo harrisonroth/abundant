@@ -9,6 +9,21 @@
     "lint": "eslint src/**/*.js src/**/*.jsx --fix",
     "format": "prettier --write \"**/*.+(js|jsx|json|scss|md)\""
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "client/src/**/*.+(js|jsx)": [
+      "eslint --fix",
+      "git add"
+    ],
+    "**/*.+(js|jsx|json|scss|md)": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "author": "Elton C. Rego",
   "license": "ISC",
   "dependencies": {
@@ -29,6 +44,7 @@
     "eslint-plugin-react": "^7.20.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
     "prettier": "^2.0.5",
     "prop-types": "^15.7.2",
     "style-loader": "^1.2.1",
