@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development --hot",
-    "lint": "eslint src/**/*.js src/**/*.jsx --fix"
+    "lint": "eslint src/**/*.js src/**/*.jsx --fix",
+    "format": "prettier --write \"**/*.+(js|jsx|json|scss|md)\""
   },
   "author": "Elton C. Rego",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "eslint-plugin-react": "^7.20.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "prettier": "^2.0.5",
     "prop-types": "^15.7.2",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
