@@ -67,22 +67,22 @@ const App = () => {
                 size='4x'
                 height='120'
                 width='120'
-                onClick={() => {
-                  this.setState({ showSidebar: !this.state.showSidebar });
-                }}
+                onClick={() => setShowSidebar(!showSidebar)}
               />
             </div>
             <div className='header_title'>
               <h1>abundant</h1>
             </div>
           </header>
-          {this.state.showSidebar ? (
-            <div className='collapsable_sidebar'>{this.getDrawer()}</div>
+          {showSidebar ? (
+            <div className='collapsable_sidebar'>
+              <Drawer />
+            </div>
           ) : null}
           {/* Sidebar */}
           <aside className='sidebar'>
             <h1>abundant</h1>
-            {this.getDrawer()}
+            <Drawer />
           </aside>
 
           {/* Main */}
