@@ -7,11 +7,9 @@ import { checkAuth } from '../Shared/Utils/request';
 import { FaBars } from 'react-icons/fa';
 import {
   BrowserRouter as Router,
-  Route,
   Switch,
   Link
 } from "react-router-dom";
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
@@ -49,7 +47,7 @@ class App extends React.Component {
       <div>
         <Divider />
         <div className="menu_links">
-          {['Bottles', 'Orders', 'Store', 'Notifications', 'Settings'].map((text, index) => (
+          {['Bottles', 'Orders', 'Store', 'Notifications', 'Settings'].map((text) => (
             <Link to={"/" + text.toLowerCase()} key={text}>
               <ListItem button>
               <ListItemText primary={text} />
