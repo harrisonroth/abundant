@@ -26,9 +26,9 @@ export function LogInScreen(props) {
           title='Log In'
           variant='contained'
           onClick={() => {
-            if (login({ email: username, password: password }) !== 'Error') {
-              props.setLoggedIn(true);
-            }
+            login({ email: username, password: password }, () =>
+              props.setLoggedIn(true),
+            );
           }}
         >
           Log In

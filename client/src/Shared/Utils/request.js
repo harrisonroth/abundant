@@ -88,7 +88,7 @@ export async function register(data) {
     });
 }
 
-export function login(data) {
+export function login(data, setLoggedIn) {
   return fetch(baseUrl + '/auth/login', {
     method: 'POST',
     headers: {
@@ -101,6 +101,7 @@ export function login(data) {
     .then(function (response) {
       console.log(response.status);
       if (response.status === 200) {
+        setLoggedIn();
         return response.json();
       } else {
         return 'Error';
@@ -120,7 +121,7 @@ export function login(data) {
     });
 }
 
-export function checkAuth() {
+export function checkAuth(setLoggedIn) {
   var token = localStorage.getItem('token');
   if (token == null) return 'Error';
   return fetch(baseUrl + '/auth/checkAuth', {
@@ -134,6 +135,7 @@ export function checkAuth() {
     .then(function (response) {
       console.log(response.status);
       if (response.status === 200) {
+        setLoggedIn();
         return response.json();
       } else {
         return 'Error';

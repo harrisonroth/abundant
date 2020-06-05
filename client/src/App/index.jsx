@@ -15,11 +15,8 @@ const App = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const validateAuthentication = () => {
-    let authResponse = checkAuth();
-    if (authResponse !== 'Error' && authResponse !== undefined) {
-      this.setState({ loggedIn: true });
-    }
-    console.log(authResponse);
+    let validateAuth = checkAuth(() => setLoggedIn(true));
+    console.log(validateAuth);
   };
 
   const handleLogIn = value => {
