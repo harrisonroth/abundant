@@ -21,10 +21,7 @@ class App extends React.Component {
   }
 
   validateAuth() {
-    let validateAuth = checkAuth();
-    if (validateAuth !== 'Error' && validateAuth !== undefined) {
-      this.setState({ loggedIn: true });
-    }
+    let validateAuth = checkAuth(()=> this.setState({ loggedIn: true }));
     console.log(validateAuth);
   }
 
