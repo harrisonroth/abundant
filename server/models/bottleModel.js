@@ -10,14 +10,25 @@ var BottleSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  fillPercent: {
-    type: Number,
-  },
+  measurements: [{
+    date: Date,
+    percent: Number,
+  }],
+  dailyAverages: [{
+    date: Date,
+    percent: Number,
+  }],
   batteryPercent: {
     type: Number,
   },
   contents: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Product',
+    required: true,
+  },
+  refillContents: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Product',
     required: true,
   },
   active: {

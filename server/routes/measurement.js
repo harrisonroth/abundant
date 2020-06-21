@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Measurement = require('./../models/measurementModel');
+var Bottle = require('./../models/bottleModel');
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -20,15 +21,19 @@ router.get("/:bottleId", VerifyToken, function(req, res, next) {
 router.post("/:bottleId", VerifyToken, function(req, res, next) {
     let bottleId = req.params.bottleId;
     let filter = {"bottleId": bottleId};
-    let update = { $push: req.body.measurement};
-    Bottle.findOneAndUpdate(filter, update, { runValidators: true }, (err, bottle) => {
-        if (err) return res.json({
-            message: "Measurements update failed",
-            error: err,
-            status: 500
+    if (req.body.measurements != null && req.body.batteryPercent != null) {
+        let update = { $push: {measurements : req.body.measurement}, $set: {batteryPercent: req.body.batteryPercent}};
+        Bottle.findOneAndUpdate(filter, update, { runValidators: true }, (err, bottle) => {
+            if (err) return res.json({
+                message: "Measurements update failed",
+                error: err,
+                status: 500
+            });
+            res.status(200).json(bottle);
         });
-        res.status(200).json(bottle);
-    });
+    } else {
+        res.status(500).json({"Error": "Not all required fields provided"});
+    }
 });
 
 module.exports = router;

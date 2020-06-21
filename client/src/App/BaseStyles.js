@@ -9,6 +9,7 @@ export default createGlobalStyle`
 
   .content {
     display: flex;
+    position: relative;
   }
 
   header {
@@ -16,12 +17,13 @@ export default createGlobalStyle`
     top: 0;
     right: 0;
     left: 0;
-    background-color: #aaa;
+    background-color: #555;
     color: #0c96f9;
-    width: 100%;
     text-align: center;
     display: none;
     height: 80px;
+    box-shadow: 0px 5px 5px #aaa;
+    position: fixed;
     @media only screen and (max-width: 599px) {
       display: flex;
     }
@@ -32,6 +34,8 @@ export default createGlobalStyle`
     padding-left: 8px;
     padding-right: 8px;
     margin: auto;
+    margin: 5% 5%;
+    position: relative;
   }
 
   .header_title {
@@ -43,10 +47,10 @@ export default createGlobalStyle`
 
   .sidebar {
     width: 18%;
-    background-color: #aaa;
+    background-color: #555;
     color: #0c96f9;
     padding: 1%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
@@ -80,14 +84,50 @@ export default createGlobalStyle`
   }
 
   .collapsable_sidebar {
-    width: 18%;
-    background-color: #aaa;
+    width: 30%;
+    background-color: #555;
     color: #0c96f9;
     padding: 1%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
-    display: none;
+    margin-top: 80px;
+    z-index: 10;
   }
+
+  .collapsable_sidebar_right {
+    width: 50%;
+    background-color: #555;
+    color: #0c96f9;
+    padding: 1%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 80px;
+    z-index: 10;
+  }
+
+  a {
+    color: #0c96f9;
+    text-decoration: none;
+  }
+
+  .indicator {
+    /* Shown at the bottom right corner */
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    transform: translate(50%, 50%);
+
+    /* Rounded border */
+    border-radius: 9999px;
+    height: 16px;
+    width: 16px;
+
+    /* Background color */
+    background-color: #fff;
+  }
+
 `;

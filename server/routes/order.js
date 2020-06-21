@@ -34,4 +34,25 @@ router.get("/:orderId", VerifyToken, function(req, res, next) {
     );
 });
 
+router.post("/create", VerifyToken, function(req, res, next) {
+    console.log(req.body);
+    if (req.body.type ) {
+        data = {
+            userId: req.userId,
+            type: req.body.type,
+            status: req.body.status,
+            trackingId: req.body.trackingId
+            };
+
+        Order.create(data,
+            function (err, order) {
+            if (err) return res.status(500).json({"Error": "There was an error creating the order. " + err})
+            
+            res.status(200).json({"order": order});
+            });	
+    } else {
+        return res.status(500).json({"Error": "There was a problem creating the order. Not all required fields present"});
+    }
+});
+
 module.exports = router;

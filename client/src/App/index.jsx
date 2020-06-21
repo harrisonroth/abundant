@@ -4,11 +4,14 @@ import NormalizeStyles from './NormalizeStyles';
 import BaseStyles from './BaseStyles';
 import { LogInScreen } from '../Views/Login';
 import { checkAuth } from '../Shared/Utils/request';
-import { FaBars } from 'react-icons/fa';
-import { BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import { FaBars, FaShoppingCart } from 'react-icons/fa';
+import { BrowserRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import { BottleView } from '../Views/Bottle';
+import { OrderView } from '../Views/Order';
+import { StoreView } from '../Views/Store';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,11 +20,12 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       showSidebar: false,
+      cart: [],
     };
   }
 
   validateAuth() {
-    let validateAuth = checkAuth(()=> this.setState({ loggedIn: true }));
+    let validateAuth = checkAuth(() => this.setState({ loggedIn: true }));
     console.log(validateAuth);
   }
 
@@ -34,6 +38,10 @@ class App extends React.Component {
     this.validateAuth();
   }
 
+  logout() {
+    localStorage.removeItem('token');
+  }
+
   getDrawer() {
     return (
       <div>
@@ -41,18 +49,27 @@ class App extends React.Component {
         <div className='menu_links'>
           {['Bottles', 'Orders', 'Store', 'Notifications', 'Settings'].map(
             text => (
-              <Link to={'/' + text.toLowerCase()} key={text}>
+              <Link
+                to={'/' + (text === 'Bottles' ? '' : text.toLowerCase())}
+                key={text}
+              >
                 <ListItem button>
                   <ListItemText primary={text} />
                 </ListItem>
-                {/* <div className="menu_link">
-                <span>
-                  {text}
-                </span> */}
-                {/* </div> */}
               </Link>
             ),
           )}
+          <Link
+            to={''}
+            key='Logout'
+            onClick={() => {
+              this.logout();
+            }}
+          >
+            <ListItem button>
+              <ListItemText primary='Logout' />
+            </ListItem>
+          </Link>
         </div>
         <Divider />
       </div>
@@ -82,9 +99,27 @@ class App extends React.Component {
                 <div className='header_title'>
                   <h1>abundant</h1>
                 </div>
+                <div className='header_menu_button'>
+                  <FaShoppingCart
+                    size='4x'
+                    height='120'
+                    width='120'
+                    onClick={() => {
+                      this.setState({
+                        showShoppingSidebar: !this.state.showShoppingSidebar,
+                      });
+                    }}
+                  />
+                  <div
+                    className={this.state.cart.length > 0 ? 'indicator' : ''}
+                  />
+                </div>
               </header>
               {this.state.showSidebar ? (
                 <div className='collapsable_sidebar'>{this.getDrawer()}</div>
+              ) : null}
+              {this.state.showShoppingSidebar ? (
+                <div className='collapsable_sidebar_right'></div>
               ) : null}
               {/* Sidebar */}
               <aside className='sidebar'>
@@ -95,11 +130,17 @@ class App extends React.Component {
               {/* Main */}
               <main className='main'>
                 <Switch>
-                  {/* <Route exact path="/bottles" ><BottleView /></Route>
-                <Route path="/orders"><OrderView /></Route>
-                <Route path="/store"><StoreView /></Route>
-                <Route path="/notifications"><NotificationView /></Route>
-                <Route path="/settings"><SettingsView /></Route> */}
+                  <Route exact path='/'>
+                    <BottleView />
+                  </Route>
+                  <Route path='/orders'>
+                    <OrderView />
+                  </Route>
+                  <Route path='/store'>
+                    <StoreView />
+                  </Route>
+                  {/* <Route path="/notifications"><NotificationView /></Route>
+                  <Route path="/settings"><SettingsView /></Route> */}
                 </Switch>
               </main>
             </Router>

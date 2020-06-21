@@ -6,7 +6,13 @@ var OrderSchema = new mongoose.Schema({
     required: true,
   },
   type: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Product',
+    required: true,
+  },
+  contents: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Product',
     required: true,
   },
   status: {

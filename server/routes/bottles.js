@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var Bottle = require('./../models/bottleModel');
+var Measurement = require('./../models/measurementModel');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var VerifyToken = require('./../controllers/VerifyToken');
@@ -18,11 +19,7 @@ router.get("/", VerifyToken, function(req, res, next) {
                 status: 500
             }); 
         }
-        returnList = [];
-        bottles.map((bottle) => {
-            returnList.push(bottle)
-        });
-        res.status(200).json(returnList);
+        res.status(200).json(bottles);
         }
     );
 });
@@ -33,7 +30,6 @@ router.post("/create", VerifyToken, function(req, res, next) {
         data = {
             userId: req.userId,
             name : req.body.name,
-            fillPercent: (req.body.fillPercent) ? req.body.fillPercent : null,
             batteryPercent: (req.body.batteryPercent) ? req.body.batteryPercent : null,
             contents : req.body.contents,
             active : true,
@@ -65,7 +61,7 @@ router.get("/:bottleId", VerifyToken, function(req, res, next) {
 });
 
 /* POST update bottle name */
-router.post("/:bottleId", VerifyToken, function(req, res, next) {
+router.post("/:bottleId/rename", VerifyToken, function(req, res, next) {
     if (req.body.name) {
         let bottleId = req.params.bottleId;
         let filter = {"_id": bottleId, "userId": req.userId};

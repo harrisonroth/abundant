@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.1.141:4200';
+const baseUrl = 'http://192.168.1.141:4210';
 
 export function makePost(endpoint, data) {
   let token = localStorage.getItem('token');
@@ -29,7 +29,7 @@ export function makePost(endpoint, data) {
     });
 }
 
-export function makeGet(endpoint) {
+export function makeGet(endpoint, callback) {
   let token = localStorage.getItem('token');
   return fetch(baseUrl + endpoint, {
     method: 'GET',
@@ -49,7 +49,7 @@ export function makeGet(endpoint) {
     })
     .then(json => {
       console.log(json);
-      return json;
+      callback(json);
     })
     .catch(function (error) {
       console.log(error);
