@@ -3,13 +3,8 @@ import BottleCardStyles from './BottleCardStyles';
 import { Line } from 'react-chartjs-2';
 
 export const BottleCard = props => {
-  if (props.bottle.dailyAverages.length === 0) {
-    props.bottle.dailyAverages = [65, 59, 80, 81, 56, 55, 40];
-  }
-
   var graphData = [];
   var labels = [];
-  console.log(props.bottle.dailyAverages);
   props.bottle.dailyAverages.forEach(average => {
     graphData.push(average.percent);
     labels.push(new Date(average.date).toISOString().split('T')[0]);

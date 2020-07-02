@@ -10,7 +10,6 @@ export const BottleView = props => {
   const [loaded, setLoaded] = useState(false);
 
   const setBottleList = bottleList => {
-    console.log(bottleList);
     setLoaded(true);
     setBottles(bottleList);
   };
@@ -20,7 +19,6 @@ export const BottleView = props => {
   }, []);
 
   useEffect(() => {
-    console.log("Behavior when the value of 'foo' changes.");
     let cards = [];
     if (bottles.length > 0) {
       bottles.forEach(bottle => {

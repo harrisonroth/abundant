@@ -14,7 +14,6 @@ export const ProductCard = props => {
 
   const closeModal = e => {
     e.stopPropagation();
-    console.log('close');
     setIsOpen(false);
   };
 

@@ -2,7 +2,6 @@ export const baseUrl = 'http://192.168.1.141:4210';
 
 export function makePost(endpoint, data) {
   let token = localStorage.getItem('token');
-  console.log(data);
   return fetch(baseUrl + endpoint, {
     method: 'POST',
     headers: {
@@ -20,7 +19,6 @@ export function makePost(endpoint, data) {
       }
     })
     .then(json => {
-      console.log(json);
       return json;
     })
     .catch(function (error) {
@@ -40,7 +38,6 @@ export function makeGet(endpoint, callback) {
     },
   })
     .then(function (response) {
-      console.log(response);
       if (response.status === 200) {
         return response.json();
       } else {
@@ -48,7 +45,6 @@ export function makeGet(endpoint, callback) {
       }
     })
     .then(json => {
-      console.log(json);
       callback(json);
     })
     .catch(function (error) {
@@ -76,7 +72,6 @@ export function register(data, setLoggedIn) {
     })
     .then(json => {
       if (json !== 'Error') {
-        console.log(json);
         localStorage.setItem('token', json.token);
         localStorage.setItem('userId', String(json.userId));
         setLoggedIn();
@@ -100,7 +95,6 @@ export function login(data, setLoggedIn) {
     body: JSON.stringify(data),
   })
     .then(function (response) {
-      console.log(response.status);
       if (response.status === 200) {
         return response.json();
       } else {
@@ -109,7 +103,6 @@ export function login(data, setLoggedIn) {
     })
     .then(json => {
       if (json !== 'Error') {
-        console.log('userId: ' + json.userId);
         localStorage.setItem('token', json.token);
         localStorage.setItem('userId', String(json.userId));
         setLoggedIn();
@@ -134,7 +127,6 @@ export function checkAuth(setLoggedIn) {
     },
   })
     .then(function (response) {
-      console.log(response.status);
       if (response.status === 200) {
         setLoggedIn();
         return response.json();

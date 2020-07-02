@@ -10,7 +10,6 @@ export const OrderView = props => {
   const [loaded, setLoaded] = useState(false);
 
   const setorderList = orderList => {
-    console.log(orderList);
     setLoaded(true);
     setorders(orderList);
   };
@@ -20,7 +19,6 @@ export const OrderView = props => {
   }, []);
 
   useEffect(() => {
-    console.log("Behavior when the value of 'foo' changes.");
     let cards = [];
     orders.forEach(order => {
       cards.push(<OrderCard order={order} key={order._id} />);

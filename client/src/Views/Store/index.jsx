@@ -11,7 +11,6 @@ export const StoreView = props => {
   const [filter, setFilter] = useState('container');
 
   const setProductList = productList => {
-    console.log(productList);
     setProducts(productList);
   };
 
@@ -20,7 +19,6 @@ export const StoreView = props => {
   }, []);
 
   useEffect(() => {
-    console.log(filter);
     makeGet('/products/' + filter, setProductList);
   }, [filter]);
 
