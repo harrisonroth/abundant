@@ -4,7 +4,7 @@ import { makeGet } from '../../Shared/Utils/request';
 import BottleViewStyles from './BottleViewStyles';
 import { FaSpinner } from 'react-icons/fa';
 
-export const BottleView = () => {
+export const BottleView = props => {
   const [bottles, setBottles] = useState([]);
   const [bottleCards, setBottleCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -48,6 +48,10 @@ export const BottleView = () => {
   return (
     <div>
       <BottleViewStyles />
+      <div className='content_header'>
+        <h1>Containers</h1>
+        <div className='cart_icon'>{props.getCartIcon()}</div>
+      </div>
       {bottleCards.length > 0 ? getBottleCards() : noBottles()}
     </div>
   );

@@ -3,12 +3,12 @@ import StoreViewStyles from './StoreViewStyles';
 import { FaShoppingCart, FaSpinner } from 'react-icons/fa';
 import { makeGet } from '../../Shared/Utils/request';
 import { ProductCard } from './Card';
+import Select from 'react-select';
 
-export const StoreView = () => {
-  const [showShoppingSidebar, setShoppingSidebar] = useState(false);
-
+export const StoreView = props => {
   const [products, setProducts] = useState([]);
   const [productCards, setProductCards] = useState([]);
+  const [filter, setFilter] = useState('container');
 
   const setProductList = productList => {
     console.log(productList);
@@ -18,6 +18,11 @@ export const StoreView = () => {
   useEffect(() => {
     makeGet('/products/container', setProductList);
   }, []);
+
+  useEffect(() => {
+    console.log(filter);
+    makeGet('/products/' + filter, setProductList);
+  }, [filter]);
 
   useEffect(() => {
     let cards = [];
@@ -38,18 +43,21 @@ export const StoreView = () => {
   return (
     <div>
       <StoreViewStyles />
-      <div className='store_header'>
+      <div className='content_header'>
         <h1>Store</h1>
-        <div className='cart_icon'>
-          <FaShoppingCart
-            size='2x'
-            height='20'
-            width='20'
-            onClick={() => {
-              this.setShoppingSidebar(!this.state.showShoppingSidebar);
-            }}
+        <div className='store_filter'>
+          <label>Browse by: </label>
+          <Select
+            className='select_filter'
+            options={[
+              { value: 'container', label: 'Containers' },
+              { value: 'fill', label: 'Fill Options' },
+            ]}
+            defaultValue={{ value: 'container', label: 'Containers' }}
+            onChange={value => setFilter(value.value)}
           />
         </div>
+        <div className='cart_icon'>{props.getCartIcon()}</div>
       </div>
       <div className='card_list'>
         {productCards.length > 0 ? productCards : showLoader()}

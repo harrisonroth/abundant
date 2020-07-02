@@ -3,68 +3,108 @@ import { color, font } from './../../../../Shared/Utils/styles';
 
 export default createGlobalStyle`
 
-    /* The Modal (background) */
-    .detail_card {
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+    .card_img_detail img {
+        width: 65%;
+        margin: auto;
+        display: block;
     }
 
-    /* Modal Content */
-    .detail_card_content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    .card_img_detail {
+        margin: 2% 10%;
     }
 
-    /* The Close Button */
-    .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    .carousel img {
+        width: 20%;
+        margin-left: 2.5%;
+        @media only screen and (max-width: 599px) {
+            margin-left: 5vw;
+        }
+    }
+    
+    .carousel {
+        margin: auto;
     }
 
-    .close:hover,
-    .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+    .section_one {
+        display: flex;
+        padding-top: 2%;
+        @media only screen and (max-width: 599px) {
+            flex-direction: column;
+        }
     }
 
-    .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width:100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    .product_images {
+        width: 50%;
+        @media only screen and (max-width: 599px) {
+            flex-basis: 90%;
+        }
     }
 
-    .modal-main {
-    position:fixed;
-    background: white;
-    width: 80%;
-    height: auto;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    .detail_contents {
+        flex-wrap: wrap;
+        padding: 0% 5%;
     }
 
-    .display-block {
-    display: block;
+    .detail_data {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 50%; 
     }
 
-    .display-none {
-    display: none;
+    .selector_container {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        border-bottom-color: transparent;
+        border-radius: 4px;
+    }
+
+    .select_option {
+        overflow-y: scroll;
+        height: 25vw;
+        width: 20%;
+    }
+
+    .option_detail {
+        height: 25vw;
+        width: 28%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+
+    .size_selector {
+        margin-top: 5%;
+    }
+
+    b {
+        color: #f00;
+    }
+
+    .content {
+        display: flex;
+    }
+
+    .options {
+        overflow-y: scroll;
+        width: 30%;
+    }
+
+    .option {
+        border-style: solid;
+        border-width: 1px;
+        border-color: #aaa;
+        padding: 2%;
+        background: #eee;
+        margin: 2px;
+        border-radius: 10px;
+    }
+
+    .selected_option {
+        background: #ddd;
+    }
+
+    .option_details {
+        width: 65%;
+        margin-left: 2.5%;
     }
 `;

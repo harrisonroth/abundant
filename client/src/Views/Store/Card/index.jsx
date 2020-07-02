@@ -18,6 +18,20 @@ export const ProductCard = props => {
     setIsOpen(false);
   };
 
+  const modalStyles = {
+    content: {
+      borderRadius: '15px',
+    },
+  };
+
+  const getPrice = () => {
+    if (props.product.type == 'Fill') {
+      return '+$3.99'; //+props.product.price;
+    } else {
+      return '$24.00 - 35.99';
+    }
+  };
+
   return (
     <div className='card' onClick={openModal}>
       <ProductCardStyles />
@@ -30,23 +44,16 @@ export const ProductCard = props => {
             <div className='card_title'>{props.product.name}</div>
             <div className='description'>{props.product.description}</div>
           </div>
-          <div className='card_price'>$23.98</div>
+          <div className='card_price'>{getPrice()}</div>
         </div>
       </div>
 
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        className='detail_card'
+        style={modalStyles}
       >
-        <div className=''>
-          <div className=''>
-            <div onClick={closeModal}>
-              <span className='close'>&times;</span>
-            </div>
-            <p>Some text in the Modal..</p>
-          </div>
-        </div>
+        <ProductDetailCard closeModal={closeModal} product={props.product} />
       </Modal>
     </div>
   );

@@ -4,7 +4,7 @@ import { makeGet } from '../../Shared/Utils/request';
 import OrderViewStyles from './OrderViewStyles';
 import { FaSpinner } from 'react-icons/fa';
 
-export const OrderView = () => {
+export const OrderView = props => {
   const [orders, setorders] = useState([]);
   const [orderCards, setorderCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -47,6 +47,10 @@ export const OrderView = () => {
   return (
     <div>
       <OrderViewStyles />
+      <div className='content_header'>
+        <h1>Orders</h1>
+        <div className='cart_icon'>{props.getCartIcon()}</div>
+      </div>
       {orderCards.length ? getOrderCards() : noOrders()}
     </div>
   );

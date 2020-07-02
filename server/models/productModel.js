@@ -12,12 +12,19 @@ var ProductScema = new mongoose.Schema({
     type: String
   },
   sizes: [ // dimensions for containers, volume/weight or fill
-    { type:String }
+    {
+      value: String,
+      label: String,
+      price: Number
+    }
   ],
   fillProducts: [{ // empty if type is fill
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Product',
-  }]
+  }],
+  price: {
+    type: Number
+  }
 });
 mongoose.model('Product', ProductScema);
 

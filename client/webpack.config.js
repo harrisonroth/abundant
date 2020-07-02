@@ -10,6 +10,7 @@ module.exports = {
   devServer: {
     inline: true,
     port: 3000,
+    historyApiFallback: true,
   },
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],

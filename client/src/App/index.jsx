@@ -12,6 +12,8 @@ import Divider from '@material-ui/core/Divider';
 import { BottleView } from '../Views/Bottle';
 import { OrderView } from '../Views/Order';
 import { StoreView } from '../Views/Store';
+import { getCartContents } from '../Shared/Utils/cart';
+import { CartDrawer } from '../Shared/Components/CartDrawer';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,7 +22,7 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       showSidebar: false,
-      cart: [],
+      showShoppingSidebar: false,
     };
   }
 
@@ -40,6 +42,19 @@ class App extends React.Component {
 
   logout() {
     localStorage.removeItem('token');
+  }
+
+  getCartIcon() {
+    return (
+      <FaShoppingCart
+        size={28}
+        onClick={() => {
+          this.setState({
+            showShoppingSidebar: !this.state.showShoppingSidebar,
+          });
+        }}
+      />
+    );
   }
 
   getDrawer() {
@@ -88,9 +103,7 @@ class App extends React.Component {
               <header>
                 <div className='header_menu_button'>
                   <FaBars
-                    size='4x'
-                    height='120'
-                    width='120'
+                    size={28}
                     onClick={() => {
                       this.setState({ showSidebar: !this.state.showSidebar });
                     }}
@@ -99,27 +112,18 @@ class App extends React.Component {
                 <div className='header_title'>
                   <h1>abundant</h1>
                 </div>
-                <div className='header_menu_button'>
-                  <FaShoppingCart
-                    size='4x'
-                    height='120'
-                    width='120'
-                    onClick={() => {
-                      this.setState({
-                        showShoppingSidebar: !this.state.showShoppingSidebar,
-                      });
-                    }}
-                  />
-                  <div
-                    className={this.state.cart.length > 0 ? 'indicator' : ''}
-                  />
-                </div>
+                <div className='header_menu_button'>{this.getCartIcon()}</div>
               </header>
               {this.state.showSidebar ? (
                 <div className='collapsable_sidebar'>{this.getDrawer()}</div>
               ) : null}
               {this.state.showShoppingSidebar ? (
-                <div className='collapsable_sidebar_right'></div>
+                <CartDrawer
+                  setIsVisible={value =>
+                    this.setState({ showShoppingSidebar: value })
+                  }
+                  isVisible={this.state.showSidebar}
+                />
               ) : null}
               {/* Sidebar */}
               <aside className='sidebar'>
@@ -131,13 +135,13 @@ class App extends React.Component {
               <main className='main'>
                 <Switch>
                   <Route exact path='/'>
-                    <BottleView />
+                    <BottleView getCartIcon={this.getCartIcon.bind(this)} />
                   </Route>
                   <Route path='/orders'>
-                    <OrderView />
+                    <OrderView getCartIcon={this.getCartIcon.bind(this)} />
                   </Route>
                   <Route path='/store'>
-                    <StoreView />
+                    <StoreView getCartIcon={this.getCartIcon.bind(this)} />
                   </Route>
                   {/* <Route path="/notifications"><NotificationView /></Route>
                   <Route path="/settings"><SettingsView /></Route> */}

@@ -42,18 +42,28 @@ export default createGlobalStyle`
         float: right;
         position: absolute;
         right: 5px;
+        @media only screen and (max-width: 599px) {
+            position: relative;
+        }
     }
 
     .card_img {
         margin-right: 4%;
         width: 120px;
         height: 120px;
+        @media only screen and (max-width: 599px) {
+            margin: auto;
+            margin-bottom: 15px;
+        }
     }
 
     .card_data {
         width: 100%;
         display: flex;
         position: relative;
+        @media only screen and (max-width: 599px) {
+            flex-direction: column;
+        }
     }
 
     .track_container {
@@ -81,40 +91,5 @@ export default createGlobalStyle`
     .row {
         flex-wrap: wrap;
         width: 100%;
-    }
-
-        /* The Close Button */
-        .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-    }
-
-    .display-block {
-    display: block;
-    }
-
-    .display-none {
-    display: none;
-    }
-    .detail_card {
-        /* border-radius: 15px; */
-    }
-
-    /* Modal Content */
-    .detail_card_content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
     }
 `;

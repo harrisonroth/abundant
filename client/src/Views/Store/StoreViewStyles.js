@@ -18,17 +18,26 @@ export default createGlobalStyle`
         text-align: center;
     }
 
-    .cart_icon {
-        margin: auto;   
-        margin-left: 90%;
-        @media only screen and (max-width: 599px) {
-            display: none;
-        }
-    }
-
     .loader {
         width: 100;
         text-align: center;
         margin: auto;
+    }
+
+    .store_filter {
+        position: relative;
+        width: 50%;
+        margin: auto;
+    }
+
+    .store_filter label {
+        /* Position the label */
+        left: 8px;
+        position: absolute;
+        top: 0;
+    }
+
+    .select_filter {
+        padding-top: 15px;
     }
 `;

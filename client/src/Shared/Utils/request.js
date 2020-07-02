@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.1.141:4210';
+export const baseUrl = 'http://192.168.1.141:4210';
 
 export function makePost(endpoint, data) {
   let token = localStorage.getItem('token');

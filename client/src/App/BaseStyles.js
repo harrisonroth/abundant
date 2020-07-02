@@ -97,7 +97,7 @@ export default createGlobalStyle`
   }
 
   .collapsable_sidebar_right {
-    width: 50%;
+    width: 30%;
     background-color: #555;
     color: #0c96f9;
     padding: 1%;
@@ -105,8 +105,12 @@ export default createGlobalStyle`
     top: 0;
     right: 0;
     bottom: 0;
-    margin-top: 80px;
     z-index: 10;
+    @media only screen and (max-width: 599px) {
+      margin-top: 80px;
+      width: 50%;
+
+    }
   }
 
   a {
@@ -129,5 +133,41 @@ export default createGlobalStyle`
     /* Background color */
     background-color: #fff;
   }
+
+  .content_header {
+        position: relative;
+        top: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        color: #555;
+    }
+
+    .cart_icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        @media only screen and (max-width: 599px) {
+            display: none;
+        }
+    }
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+    }
+
+    .float_right {
+        float: right;
+    }
 
 `;
