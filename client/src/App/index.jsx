@@ -41,7 +41,8 @@ class App extends React.Component {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    this.setState({ loggedIn: false });
+    localStorage.clear();
   }
 
   getCartIcon() {

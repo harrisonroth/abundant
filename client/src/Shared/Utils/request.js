@@ -57,7 +57,7 @@ export function makeGet(endpoint, callback) {
     });
 }
 
-export async function register(data) {
+export function register(data, setLoggedIn) {
   return fetch(baseUrl + '/auth/register', {
     method: 'POST',
     headers: {
@@ -79,6 +79,7 @@ export async function register(data) {
         console.log(json);
         localStorage.setItem('token', json.token);
         localStorage.setItem('userId', String(json.userId));
+        setLoggedIn();
         return 'LoggedIn';
       }
     })
@@ -101,7 +102,6 @@ export function login(data, setLoggedIn) {
     .then(function (response) {
       console.log(response.status);
       if (response.status === 200) {
-        setLoggedIn();
         return response.json();
       } else {
         return 'Error';
@@ -112,6 +112,7 @@ export function login(data, setLoggedIn) {
         console.log('userId: ' + json.userId);
         localStorage.setItem('token', json.token);
         localStorage.setItem('userId', String(json.userId));
+        setLoggedIn();
         return 'LoggedIn';
       }
     })

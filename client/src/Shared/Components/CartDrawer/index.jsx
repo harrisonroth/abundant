@@ -39,16 +39,18 @@ export const CartDrawer = props => {
   useEffect(() => {
     var cartCards = [];
     var index = 0;
-    cartItems.forEach(item => {
-      cartCards.push(
-        <CartCard
-          item={item}
-          itemId={index}
-          removeItem={index => removeItem(index)}
-        />,
-      );
-      index++;
-    });
+    if (cartItems != null) {
+      cartItems.forEach(item => {
+        cartCards.push(
+          <CartCard
+            item={item}
+            itemId={index}
+            removeItem={index => removeItem(index)}
+          />,
+        );
+        index++;
+      });
+    }
     setCartCards(cartCards);
   }, [cartItems]);
 
@@ -60,7 +62,7 @@ export const CartDrawer = props => {
           &times;
         </span>
       </div>
-      <div clasName='cart_title'>
+      <div className='cart_title'>
         <h2>Cart</h2>
       </div>
 

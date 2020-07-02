@@ -22,10 +22,12 @@ export const BottleView = props => {
   useEffect(() => {
     console.log("Behavior when the value of 'foo' changes.");
     let cards = [];
-    bottles.forEach(bottle => {
-      cards.push(<BottleCard bottle={bottle} key={bottle.id} />);
-      cards.push(<BottleCard bottle={bottle} key={bottle.id} />);
-    });
+    if (bottles.length > 0) {
+      bottles.forEach(bottle => {
+        cards.push(<BottleCard bottle={bottle} key={bottle.id} />);
+        cards.push(<BottleCard bottle={bottle} key={bottle.id} />);
+      });
+    }
     setBottleCards(cards);
   }, [bottles]);
 
