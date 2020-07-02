@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getCartContents } from '../../Utils/cart';
+import { getCartContents, removeItemFromCart } from '../../Utils/cart';
 import { CartCard } from './Card';
 import CartCardStyles from './Card/CartCardStyles';
 import { Button } from '@material-ui/core';
@@ -24,16 +24,33 @@ function useComponentVisible(setIsComponentVisible) {
 }
 
 export const CartDrawer = props => {
-  const getSidebarCards = () => {
-    var cart = getCartContents();
+  const [cartItems, setCartItems] = useState([]);
+  const [cartCards, setCartCards] = useState([]);
+
+  const removeItem = index => {
+    removeItemFromCart(index);
+    setCartItems(getCartContents());
+  };
+
+  useEffect(() => {
+    setCartItems(getCartContents());
+  }, []);
+
+  useEffect(() => {
     var cartCards = [];
     var index = 0;
-    cart.forEach(item => {
-      cartCards.push(<CartCard item={item} itemId={index} />);
+    cartItems.forEach(item => {
+      cartCards.push(
+        <CartCard
+          item={item}
+          itemId={index}
+          removeItem={index => removeItem(index)}
+        />,
+      );
       index++;
     });
-    return cartCards;
-  };
+    setCartCards(cartCards);
+  }, [cartItems]);
 
   const ref = useComponentVisible(props.setIsVisible);
   return (
@@ -49,7 +66,7 @@ export const CartDrawer = props => {
 
       <div className='cart_list'>
         <CartCardStyles />
-        {getSidebarCards()}
+        {cartCards}
       </div>
       <div className='cart_buttons'>
         <Button variant='contained' className='float_right'>

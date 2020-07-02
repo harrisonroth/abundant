@@ -1,16 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { removeItemFromCart } from '../../../Utils/cart';
 
 export const CartCard = props => {
   return (
     <div className='cart_card'>
       <div>
-        <span
-          className='close'
-          onClick={() => {
-            removeItemFromCart(props.itemId);
-          }}
-        >
+        <span className='close' onClick={() => props.removeItem(props.itemId)}>
           &times;
         </span>
       </div>
