@@ -19,6 +19,10 @@ var UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  notifications: {type: Array},
+  settings: {
+    type: Object
   }
 });
 mongoose.model('User', UserSchema);

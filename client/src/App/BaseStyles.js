@@ -170,4 +170,15 @@ export default createGlobalStyle`
         float: right;
     }
 
+    .notification_alert {
+      position: absolute;
+      right: 10px;
+      color: #555;
+      background-color: #0c96f9;
+      border-radius: 20px;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+    }
+
 `;

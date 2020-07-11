@@ -14,6 +14,8 @@ import { OrderView } from '../Views/Order';
 import { StoreView } from '../Views/Store';
 import { getCartContents } from '../Shared/Utils/cart';
 import { CartDrawer } from '../Shared/Components/CartDrawer';
+import { NotificationView } from '../Views/Notifications';
+import { SettingsView } from '../Views/Settings';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,17 +25,30 @@ class App extends React.Component {
       loggedIn: false,
       showSidebar: false,
       showShoppingSidebar: false,
+      user: null,
     };
   }
 
   validateAuth() {
-    let validateAuth = checkAuth(() => this.setState({ loggedIn: true }));
-    console.log(validateAuth);
+    let validateAuth = checkAuth(user =>
+      this.setState({ loggedIn: true, user: user }),
+    );
   }
 
   setLoggedIn(value) {
-    console.log('loggedin: ' + value);
     this.setState({ loggedIn: value });
+  }
+
+  updateUserNotifications(notifications) {
+    let updatedValue = this.state.user;
+    updatedValue.notifications = notifications;
+    this.setState({ user: updatedValue });
+  }
+
+  updateUserSettings(settings) {
+    let updatedValue = this.state.user;
+    updatedValue.settings = settings;
+    this.setState({ user: updatedValue });
   }
 
   componentDidMount() {
@@ -59,6 +74,15 @@ class App extends React.Component {
   }
 
   getDrawer() {
+    console.log(this.state.user);
+    let notifications_alert = null;
+    if (this.state.user !== null && this.state.user.notifications.length > 0) {
+      notifications_alert = (
+        <div className='notification_alert'>
+          {this.state.user.notifications.length}
+        </div>
+      );
+    }
     return (
       <div>
         <Divider />
@@ -70,6 +94,7 @@ class App extends React.Component {
                 key={text}
               >
                 <ListItem button>
+                  {text === 'Notifications' ? notifications_alert : null}
                   <ListItemText primary={text} />
                 </ListItem>
               </Link>
@@ -144,8 +169,22 @@ class App extends React.Component {
                   <Route path='/store'>
                     <StoreView getCartIcon={this.getCartIcon.bind(this)} />
                   </Route>
-                  {/* <Route path="/notifications"><NotificationView /></Route>
-                  <Route path="/settings"><SettingsView /></Route> */}
+                  <Route path='/notifications'>
+                    <NotificationView
+                      getCartIcon={this.getCartIcon.bind(this)}
+                      user={this.state.user}
+                      updateNotifications={this.updateUserNotifications.bind(
+                        this,
+                      )}
+                    />
+                  </Route>
+                  <Route path='/settings'>
+                    <SettingsView
+                      getCartIcon={this.getCartIcon.bind(this)}
+                      user={this.state.user}
+                      updateSettings={this.updateUserSettings.bind(this)}
+                    />
+                  </Route>
                 </Switch>
               </main>
             </Router>

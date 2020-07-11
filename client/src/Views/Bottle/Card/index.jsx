@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import BottleCardStyles from './BottleCardStyles';
 import { Line } from 'react-chartjs-2';
+import { FaPencilAlt } from 'react-icons/fa';
+import { makePost } from '../../../Shared/Utils/request';
 
 export const BottleCard = props => {
+  const [editName, setEditName] = useState(false);
+  const [cardName, setCardName] = useState(props.bottle.name);
+
+  const updateCardSettings = () => {
+    makePost('/bottles/' + props.bottle._id + '/rename', { name: cardName });
+  };
+
   var graphData = [];
   var labels = [];
   props.bottle.dailyAverages.forEach(average => {
@@ -25,7 +34,48 @@ export const BottleCard = props => {
     <div className='card'>
       <BottleCardStyles />
       <div className='card_data'>
-        <div className='card_title'>{props.bottle.name}</div>
+        <div className='card_title'>
+          {editName ? (
+            <div className='title_div'>
+              <input
+                placeholder={cardName}
+                value={cardName}
+                onChange={e => setCardName(e.target.value)}
+              />
+              <button
+                title='Save'
+                variant='contained'
+                onClick={() => {
+                  setEditName(false);
+                  updateCardSettings();
+                }}
+              >
+                Save
+              </button>
+              <button
+                title='Cancel'
+                variant='contained'
+                onClick={() => {
+                  setEditName(false);
+                  setCardName(props.bottle.name);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div className='title_div'>
+              {cardName}
+              <div className='edit_pen'>
+                <FaPencilAlt
+                  height='40'
+                  width='40'
+                  onClick={() => setEditName(true)}
+                />
+              </div>
+            </div>
+          )}
+        </div>
         <ul>
           <li>Battery Remaining: {props.bottle.batteryPercent}</li>
           <li>Contents: {props.bottle.contents}</li>

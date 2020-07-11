@@ -1,4 +1,4 @@
-export const baseUrl = 'http://192.168.1.141:4210';
+export const baseUrl = 'http://192.168.2.114:4210';
 
 export function makePost(endpoint, data) {
   let token = localStorage.getItem('token');
@@ -74,6 +74,7 @@ export function register(data, setLoggedIn) {
       if (json !== 'Error') {
         localStorage.setItem('token', json.token);
         localStorage.setItem('userId', String(json.userId));
+        localStorage.setItem('user', json.user);
         setLoggedIn();
         return 'LoggedIn';
       }
@@ -105,6 +106,7 @@ export function login(data, setLoggedIn) {
       if (json !== 'Error') {
         localStorage.setItem('token', json.token);
         localStorage.setItem('userId', String(json.userId));
+        localStorage.setItem('user', json.user);
         setLoggedIn();
         return 'LoggedIn';
       }
@@ -117,6 +119,7 @@ export function login(data, setLoggedIn) {
 
 export function checkAuth(setLoggedIn) {
   var token = localStorage.getItem('token');
+  localStorage.removeItem('user');
   if (token == null) return 'Error';
   return fetch(baseUrl + '/auth/checkAuth', {
     method: 'GET',
@@ -128,7 +131,6 @@ export function checkAuth(setLoggedIn) {
   })
     .then(function (response) {
       if (response.status === 200) {
-        setLoggedIn();
         return response.json();
       } else {
         return 'Error';
@@ -136,6 +138,9 @@ export function checkAuth(setLoggedIn) {
     })
     .then(json => {
       if (json !== 'Error') {
+        setLoggedIn(json.user);
+        console.log(json.user);
+        localStorage.setItem('user', json.user);
         return true;
       }
     })

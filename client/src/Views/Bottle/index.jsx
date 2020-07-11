@@ -23,7 +23,6 @@ export const BottleView = props => {
     if (bottles.length > 0) {
       bottles.forEach(bottle => {
         cards.push(<BottleCard bottle={bottle} key={bottle.id} />);
-        cards.push(<BottleCard bottle={bottle} key={bottle.id} />);
       });
     }
     setBottleCards(cards);

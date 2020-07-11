@@ -9,13 +9,13 @@ export const OrderView = props => {
   const [orderCards, setorderCards] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  const setorderList = orderList => {
+  const setOrderList = orderList => {
     setLoaded(true);
     setorders(orderList);
   };
 
   useEffect(() => {
-    makeGet('/order/', setorderList);
+    makeGet('/order/', setOrderList);
   }, []);
 
   useEffect(() => {

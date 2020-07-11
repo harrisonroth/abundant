@@ -31,16 +31,24 @@ router.post('/register', function(req, res) {
 	    firstName : req.body.firstName,
 	    lastName : req.body.lastName,
 	    email : req.body.email,
-	    password : hashedPassword	
+		password : hashedPassword,
+		notifications: [{"type": "Welcome", "value": "Welcome to abundant, thank you for joining us!"}],
+		settings: {
+			card: {
+				credit_card: "",
+				cvc: "",
+				zip_code: "",
+			}
+		}
   	},
   	function (err, user) {
-  		console.log(user);
+  		console.log(err);
 	    if (err) return res.status(500).send("There was a problem registering the user.")
 	    // create a token
 	    var token = jwt.sign({ id: user._id }, config.secret, {
 	      expiresIn: 31536000 // expires in one year
 	    });
-	    res.status(200).send({ auth: true, token: token, userId: user._id });
+	    res.status(200).send({ auth: true, token: token, userId: user._id, user: user});
 	});	
 	} else {
 		return res.status(500).send("There was a problem registering the user. Not all required fields present")
@@ -64,7 +72,7 @@ router.post('/login', function(req, res) {
 			var token = jwt.sign({ id: user._id }, config.secret, {
 	      		expiresIn: 31536000 // expires in one year
 			});
-			returnData = { auth: true, token: token, userId: user._id };
+			returnData = { auth: true, token: token, userId: user._id, user: user};
 			res.status(200).send(returnData);
 		});
 	}
@@ -73,8 +81,79 @@ router.post('/login', function(req, res) {
 
 
 router.get('/checkAuth', VerifyToken, function(req, res) {
-    res.status(200).send("Authenticated");
+	User.findById(req.userId, function (err, user) {
+		if (err) { 
+			console.log(err);
+			return res.json({
+				message: "get user failed",
+				error: err,
+				status: 500
+			});
+		}
+		res.status(200).send({user: getUserObjectForClient(user)});
+	});
 });
+
+router.get('/userData', VerifyToken, function(req, res) {
+    User.findById(req.userId, function (err, user) {
+		if (err) { 
+			console.log(err);
+			return res.json({
+				message: "get user failed",
+				error: err,
+				status: 500
+			});
+		}
+		res.status(200).send({user: getUserObjectForClient(user)});
+	});
+});
+
+router.post("/updateSettings", VerifyToken, function(req, res, next) {
+    if (req.body.settings) {
+        let filter = {"_id": req.userId};
+        let update = {"settings" : req.body.settings};
+        User.findOneAndUpdate(filter, update, { runValidators: true }, (err, user) => {
+            if (err) return res.json({
+                message: "User settings update failed",
+                error: err,
+                status: 500
+            });
+            res.status(200).json(getUserObjectForClient(user));
+        });
+    }
+});
+
+
+router.post("/updateSettings", VerifyToken, function(req, res, next) {
+    if (req.body.settings) {
+        let filter = {"_id": req.userId};
+        let update = {"settings" : req.body.settings};
+        User.findOneAndUpdate(filter, update, { runValidators: true }, (err, user) => {
+            if (err) return res.json({
+                message: "User settings update failed",
+                error: err,
+                status: 500
+            });
+            res.status(200).json(getUserObjectForClient(user));
+        });
+    }
+});
+
+router.post("/updateNotifications", VerifyToken, function(req, res, next) {
+    if (req.body.notifications) {
+        let filter = {"_id": req.userId};
+        let update = {"notifications" : req.body.notifications};
+        User.findOneAndUpdate(filter, update, { runValidators: true }, (err, user) => {
+            if (err) return res.json({
+                message: "User notification update failed",
+                error: err,
+                status: 500
+            });
+            res.status(200).json(getUserObjectForClient(user));
+        });
+    }
+});
+
 
 
 function authenticate(email, password, callback) {
@@ -97,6 +176,17 @@ function authenticate(email, password, callback) {
         }
       })
     });
+}
+
+function getUserObjectForClient(user) {
+	return {
+		email: user.email,
+		firstName: user.firstName,
+		lastName: user.lastName,
+		notifications: user.notifications,
+		settings: user.settings,
+		id: user._id
+	}
 }
 
 

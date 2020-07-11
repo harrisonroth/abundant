@@ -25,6 +25,7 @@ export default createGlobalStyle`
         font-size: 150%;
         padding-top: 10%;
         padding-left: 8%;
+        
     }
     
     .card_data {
@@ -40,5 +41,21 @@ export default createGlobalStyle`
         @media only screen and (max-width: 599px) { 
             width: 80%; 
         }
+    }
+
+    .title_div {
+        width: 85%
+    }
+
+    .edit_pen {
+        float:right;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    button {
+        font-size: 75%;
     }
 `;
