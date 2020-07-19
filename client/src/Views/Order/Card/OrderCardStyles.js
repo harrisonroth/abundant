@@ -93,4 +93,17 @@ export default createGlobalStyle`
     .circle_complete {
         background-color: #0c96f9;
     }
+
+    .order_item {
+        display: grid;
+        border-top: 1px #aaa solid;
+        margin-top: 1%;
+        padding-top: 1%;
+    }
+
+    .order_items {
+        border-bottom: 1px #aaa solid;
+        margin-bottom: 1%;
+        padding-bottom: 1%;
+    }
 `;

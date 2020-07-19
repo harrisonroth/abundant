@@ -148,6 +148,7 @@ class App extends React.Component {
                     this.setState({ showShoppingSidebar: value })
                   }
                   isVisible={this.state.showSidebar}
+                  user={this.state.user}
                 />
               ) : null}
               {/* Sidebar */}

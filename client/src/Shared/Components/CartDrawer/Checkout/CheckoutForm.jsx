@@ -3,8 +3,12 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { makePost } from '../../../Utils/request';
 import { AddressForm } from './AddressForm';
 import { Button } from '@material-ui/core';
+import { clearCartContents } from '../../../Utils/cart';
+import { useHistory } from 'react-router-dom';
 
 export const CheckoutForm = props => {
+  const history = useHistory();
+
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
@@ -57,10 +61,10 @@ export const CheckoutForm = props => {
       .confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
-          billing_details: {
-            name: ev.target.name.value,
-          },
+          billing_details: billingDetails,
         },
+        shipping: shippingDetails,
+        receipt_email: props.user.email,
       })
       .then(payload => {
         console.log(payload);
@@ -71,6 +75,20 @@ export const CheckoutForm = props => {
           setError(null);
           setProcessing(false);
           setSucceeded(true);
+          makePost(
+            '/order/create',
+            {
+              items: props.items,
+              price: props.price,
+              stripeId: payload.paymentIntent.id,
+            },
+            () => {
+              clearCartContents();
+            },
+          );
+          props.closeModal();
+          props.closeCart();
+          history.push('/orders');
         }
       });
   };
@@ -107,6 +125,21 @@ export const CheckoutForm = props => {
     );
   };
 
+  const setShipping = data => {
+    setShippingDetails({
+      name: props.user.firstName + ' ' + props.user.lastName,
+      address: data,
+    });
+  };
+
+  const setBilling = data => {
+    setBillingDetails({
+      name: props.user.firstName + ' ' + props.user.lastName,
+      address: data,
+      email: props.user.email,
+    });
+  };
+
   return (
     <div className='checkout'>
       <div>
@@ -114,64 +147,67 @@ export const CheckoutForm = props => {
           &times;
         </span>
       </div>
+      <h2>Order Checkout</h2>
+      <div className='checkout_content'>
+        {step == 'shipping' ? (
+          <div className='shipping_details'>
+            <h3>Shipping Address</h3>
+            <AddressForm address={shippingDetails} setAddress={setShipping} />
+            <input
+              style={{ width: '8%' }}
+              type='checkbox'
+              onChange={() => {
+                setSameAsShipping(!sameAsShipping);
+              }}
+            />
+            <label>Shipping Address same as Billing</label>
+            <Button
+              variant='contained'
+              className='float_right'
+              onClick={() => {
+                console.log(shippingDetails);
+                if (sameAsShipping) {
+                  setStep('payment');
+                  setBillingDetails(shippingDetails);
+                } else {
+                  setStep('billing');
+                }
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        ) : null}
 
-      {step == 'shipping' ? (
-        <div className='shipping_details'>
-          <h3>Shipping Address</h3>
-          <AddressForm setAddress={setShippingDetails} />
-          <input
-            name='sameAsBilling'
-            type='checkbox'
-            onChange={() => {
-              setSameAsShipping(!sameAsShipping);
-            }}
-          />
-          <label>Shipping Address same as Billing:</label>
-          <Button
-            variant='contained'
-            className='float_right'
-            onClick={() => {
-              if (sameAsShipping) {
+        {step == 'billing' ? (
+          <div className='billing_details'>
+            <h3>Billing Address</h3>
+            <AddressForm address={billingDetails} setAddress={setBilling} />
+            <Button
+              variant='contained'
+              className='float_right'
+              onClick={() => {
+                setStep('shipping');
+              }}
+            >
+              Previous
+            </Button>
+            <Button
+              variant='contained'
+              className='float_right'
+              onClick={() => {
                 setStep('payment');
-                setBillingDetails(shippingDetails);
-              } else {
-                setStep('billing');
-              }
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ) : null}
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        ) : null}
 
-      {step == 'billing' ? (
-        <div className='billing_details'>
-          <h3>Billing Address</h3>
-          <AddressForm setAddress={setBillingDetails} />
-          <Button
-            variant='contained'
-            className='float_right'
-            onClick={() => {
-              setStep('shipping');
-            }}
-          >
-            Previous
-          </Button>
-          <Button
-            variant='contained'
-            className='float_right'
-            onClick={() => {
-              setStep('payment');
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ) : null}
-
-      {step == 'payment' ? (
-        <div className='payment_details'>{getStripeForm()}</div>
-      ) : null}
+        {step == 'payment' ? (
+          <div className='payment_details'>{getStripeForm()}</div>
+        ) : null}
+      </div>
     </div>
   );
 };

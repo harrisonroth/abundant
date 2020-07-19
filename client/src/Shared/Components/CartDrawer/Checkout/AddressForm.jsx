@@ -8,7 +8,7 @@ const AddressItem = props => {
         <input
           type='text'
           defaultValue={props.value}
-          onChange={props.onChange}
+          onChange={e => props.onChange(e.target.value)}
           className='form-control'
           placeholder={props.value}
         />
@@ -19,7 +19,7 @@ const AddressItem = props => {
 
 const AddressInput = props => {
   return (
-    <div className='card'>
+    <div className='address_card'>
       <div className='card-body'>
         <AddressItem
           label='Street'
@@ -29,17 +29,17 @@ const AddressInput = props => {
         <AddressItem
           label='City'
           value={props.city}
-          onChange={props.cityOnstreetOnChange}
+          onChange={props.cityOnChange}
         />
         <AddressItem
           label='State'
           value={props.state}
-          onChange={props.stateOnstreetOnChange}
+          onChange={props.stateOnChange}
         />
         <AddressItem
           label='Postal Code'
           value={props.zipCode}
-          onChange={props.zipCodeOnstreetOnChange}
+          onChange={props.zipCodeOnChange}
         />
       </div>
     </div>
@@ -47,22 +47,26 @@ const AddressInput = props => {
 };
 
 export const AddressForm = props => {
-  const [street, setStreet] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zipCode, setZipCode] = useState('');
+  const [street, setStreet] = useState(
+    props.address ? props.address.line1 : '',
+  );
+  const [city, setCity] = useState(props.address ? props.address.city : '');
+  const [state, setState] = useState(props.address ? props.address.state : '');
+  const [zipCode, setZipCode] = useState(
+    props.address ? props.address.postal_code : '',
+  );
 
   useEffect(() => {
     props.setAddress({
-      street: street,
+      line1: street,
       city: city,
       state: state,
-      zipcode: zipCode,
+      postal_code: zipCode,
     });
   }, [street, city, state, zipCode]);
 
   return (
-    <div className='container'>
+    <div className=''>
       <AddressInput
         street={street}
         streetOnChange={setStreet}

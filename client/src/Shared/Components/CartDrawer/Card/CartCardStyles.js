@@ -55,4 +55,24 @@ export default createGlobalStyle`
     .checkout {
         height: 90%
     }
+
+    .checkout h2 { 
+        margin-top: 0px;
+    }
+
+    .checkout_content {
+        width: 60%;
+        margin-left: 20%;
+        @media only screen and (max-width: 599px) {
+            width: 90%;
+            margin-left: 5%;
+        }
+    }
+
+    .checkout_content input {
+        width: 100%;
+        
+        border-radius: 5px
+    }
+
 `;

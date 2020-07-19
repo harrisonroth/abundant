@@ -20,7 +20,7 @@ export const OrderView = props => {
 
   useEffect(() => {
     let cards = [];
-    orders.forEach(order => {
+    orders.reverse().forEach(order => {
       cards.push(<OrderCard order={order} key={order._id} />);
     });
     setorderCards(cards);

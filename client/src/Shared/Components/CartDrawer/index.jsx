@@ -124,12 +124,14 @@ export const CartDrawer = props => {
         onRequestClose={closeModal}
         style={modalStyles}
       >
-        <div className='checkout'>
+        <div>
           <Elements stripe={stripePromise}>
             <CheckoutForm
               items={cartItems}
               price={cartPrice}
-              closeModal={closeModal}
+              closeModal={() => setIsOpen(false)}
+              closeCart={() => props.setIsVisible(false)}
+              user={props.user}
             />
           </Elements>
         </div>

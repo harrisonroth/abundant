@@ -36,12 +36,15 @@ router.get("/:orderId", VerifyToken, function(req, res, next) {
 
 router.post("/create", VerifyToken, function(req, res, next) {
     console.log(req.body);
-    if (req.body.type ) {
+    if (req.body.items) {
         data = {
             userId: req.userId,
-            type: req.body.type,
-            status: req.body.status,
-            trackingId: req.body.trackingId
+            items: req.body.items,
+            status: 0,
+            price: req.body.price,
+            trackingId: "",
+            stripeId: req.body.stripeId,
+            date: Date.now()
             };
 
         Order.create(data,

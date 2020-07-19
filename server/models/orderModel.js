@@ -5,24 +5,26 @@ var OrderSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  type: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Product',
-    required: true,
-  },
-  contents: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Product',
-    required: true,
+  items: {
+    type: Array
   },
   status: {
     type: String,
     required: true,
   },
+  price: {
+    type: Number
+  },
   trackingId: {
     type: String,
     required: false
-  }
+  },
+  stripeId: {
+    type: String
+  },
+  date : {
+    type: Date
+  },
 });
 mongoose.model('Order', OrderSchema);
 

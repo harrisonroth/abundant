@@ -32,7 +32,7 @@ export const ProductDetailCard = props => {
 
   const addToCart = e => {
     var item = {};
-    if (props.product.type === 'container') {
+    if (props.product.type !== 'container') {
       item = {
         product: props.product,
         quantity: 1,
