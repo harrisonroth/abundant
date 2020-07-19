@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 export const CartCard = props => {
+  console.log(props);
   return (
     <div className='cart_card'>
       <div>
@@ -14,6 +15,7 @@ export const CartCard = props => {
           Fill Product: {props.item.fillProduct.name}
         </div>
         <div className='item_size'>Size: {props.item.size}</div>
+        <div className='item_price'>Total Price: ${props.price}</div>
       </div>
     </div>
   );

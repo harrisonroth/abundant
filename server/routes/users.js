@@ -8,6 +8,7 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var VerifyToken = require('./../controllers/VerifyToken');
 var config = require('./../config');
+var stripe = require('stripe')('sk_test_51H5cuhBlog3CYTmE5BLNlvyeL2X6f3OSKjC0M0ghSSPZ0uZDJ8wrVaXQyyu77pc0UC9TxbtVCH3JQanv2dRPXM4N00VTCB1n4T');
 
 /* GET users listing. */
 router.get('/list', function(req, res, next) {
@@ -27,32 +28,47 @@ router.post('/register', function(req, res) {
 		  req.body.lastName &&
 		  req.body.password) {
 	var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-	User.create({
-	    firstName : req.body.firstName,
-	    lastName : req.body.lastName,
-	    email : req.body.email,
-		password : hashedPassword,
-		notifications: [{"type": "Welcome", "value": "Welcome to abundant, thank you for joining us!"}],
-		settings: {
-			card: {
-				credit_card: "",
-				cvc: "",
-				zip_code: "",
+	stripe.customers.create(
+		{
+			email: req.body.email,
+		},
+		function(err, customer) {
+			if (err) {
+				console.log(err);
+				return res.status(500).send("There was a problem registering the user.")
 			}
-		}
-  	},
-  	function (err, user) {
-  		console.log(err);
-	    if (err) return res.status(500).send("There was a problem registering the user.")
-	    // create a token
-	    var token = jwt.sign({ id: user._id }, config.secret, {
-	      expiresIn: 31536000 // expires in one year
-	    });
-	    res.status(200).send({ auth: true, token: token, userId: user._id, user: user});
-	});	
+			console.log(customer);
+			User.create({
+				firstName : req.body.firstName,
+				lastName : req.body.lastName,
+				email : req.body.email,
+				password : hashedPassword,
+				stripeId: customer.id,
+				notifications: [{"type": "Welcome", "value": "Welcome to abundant, thank you for joining us!"}],
+				settings: {
+					card: {
+						credit_card: "",
+						cvc: "",
+						zip_code: "",
+						exp: "",
+						stripeId: ""
+					}
+				}
+			},
+			function (err, user) {
+				console.log(err);
+				if (err) return res.status(500).send("There was a problem registering the user.")
+				// create a token
+				var token = jwt.sign({ id: user._id }, config.secret, {
+				expiresIn: 31536000 // expires in one year
+				});
+				res.status(200).send({ auth: true, token: token, userId: user._id, user: user});
+			});	
+		});
 	} else {
 		return res.status(500).send("There was a problem registering the user. Not all required fields present")
 	}
+	
 });
 
 
@@ -111,7 +127,10 @@ router.get('/userData', VerifyToken, function(req, res) {
 router.post("/updateSettings", VerifyToken, function(req, res, next) {
     if (req.body.settings) {
         let filter = {"_id": req.userId};
-        let update = {"settings" : req.body.settings};
+		let update = {"settings" : req.body.settings};
+		
+
+		
         User.findOneAndUpdate(filter, update, { runValidators: true }, (err, user) => {
             if (err) return res.json({
                 message: "User settings update failed",

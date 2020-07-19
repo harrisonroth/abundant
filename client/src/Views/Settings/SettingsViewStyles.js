@@ -22,6 +22,8 @@ export default createGlobalStyle`
         color: #555;
         border-radius: 15px;
         padding: 2%;
+        width: 80%;
+        margin: auto;
     }
 
     .section_title {

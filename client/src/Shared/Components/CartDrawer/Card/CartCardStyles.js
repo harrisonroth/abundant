@@ -16,10 +16,6 @@ export default createGlobalStyle`
         }
     }
 
-    /* .cart_card:hover {
-        box-shadow: 2px 2px 3px 3px #999;
-    } */
-
     .cart_title {
         margin-left: 2%;
     }
@@ -37,12 +33,26 @@ export default createGlobalStyle`
     }
 
     .cart_list {
-        height: 85%;
+        height: 80%;
         overflow-y: scroll;
     }
 
     .cart_buttons {
         margin-top: 5%;
     }
+
+    .cart_price {
+        text-align: right;
+    }
     
+    .hidden {
+        display:none;
+    }
+    .ReactModal__Overlay {
+        z-index: 10;
+    }
+
+    .checkout {
+        height: 90%
+    }
 `;

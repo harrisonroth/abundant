@@ -1,6 +1,6 @@
 export const baseUrl = 'http://192.168.2.114:4210';
 
-export function makePost(endpoint, data) {
+export function makePost(endpoint, data, callback) {
   let token = localStorage.getItem('token');
   return fetch(baseUrl + endpoint, {
     method: 'POST',
@@ -19,6 +19,9 @@ export function makePost(endpoint, data) {
       }
     })
     .then(json => {
+      if (callback) {
+        callback(json);
+      }
       return json;
     })
     .catch(function (error) {

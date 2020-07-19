@@ -23,6 +23,9 @@ var UserSchema = new mongoose.Schema({
   notifications: {type: Array},
   settings: {
     type: Object
+  },
+  stripeId: {
+    type: String
   }
 });
 mongoose.model('User', UserSchema);

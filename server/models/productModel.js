@@ -13,7 +13,7 @@ var ProductScema = new mongoose.Schema({
   },
   sizes: [ // dimensions for containers, volume/weight or fill
     {
-      value: String,
+      size: String,
       label: String,
       price: Number
     }
@@ -22,8 +22,8 @@ var ProductScema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Product',
   }],
-  price: {
-    type: Number
+  imgs: {
+    type: Array
   }
 });
 mongoose.model('Product', ProductScema);

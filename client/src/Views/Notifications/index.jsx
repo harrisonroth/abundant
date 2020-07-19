@@ -9,7 +9,6 @@ export const NotificationView = props => {
 
   const setNotificationList = user => {
     setLoaded(true);
-    console.log(user);
     setNotifications(user.notifications);
   };
 

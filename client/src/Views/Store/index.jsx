@@ -25,7 +25,13 @@ export const StoreView = props => {
   useEffect(() => {
     let cards = [];
     products.forEach(product => {
-      cards.push(<ProductCard product={product} key={product._id} />);
+      cards.push(
+        <ProductCard
+          product={product}
+          key={product._id}
+          setCartIsVisible={props.setCartIsVisible}
+        />,
+      );
     });
     setProductCards(cards);
   }, [products]);

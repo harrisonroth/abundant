@@ -4,10 +4,12 @@ import { makeGet } from '../../../../Shared/Utils/request';
 import Select from 'react-select';
 import Button from '@material-ui/core/Button';
 import { addItemToCart } from '../../../../Shared/Utils/cart';
+import { Carousel } from '../../../../Shared/Components/Carousel';
 
 export const ProductDetailCard = props => {
   const [secondaryProducts, setProducts] = useState([]);
   const [productCards, setProductCards] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [step, setStep] = useState(1);
   const [containerSize, setContainerSize] = useState(null);
   const [showSelectError, setShowSelectError] = useState(false);
@@ -21,6 +23,7 @@ export const ProductDetailCard = props => {
   };
 
   useEffect(() => {
+    setSizeOptions();
     makeGet(
       '/products/' + (props.product.type === 'Fill' ? 'container' : 'fill'),
       setProductList,
@@ -28,22 +31,33 @@ export const ProductDetailCard = props => {
   }, []);
 
   const addToCart = e => {
-    var item = {
-      product: props.product,
-      quantity: 1,
-      fillProduct: secondaryProducts.find(
-        product => product._id === selectedSecondary,
-      ),
-      size: containerSize,
-    };
+    var item = {};
+    if (props.product.type === 'container') {
+      item = {
+        product: props.product,
+        quantity: 1,
+        fillProduct: secondaryProducts.find(
+          product => product._id === selectedSecondary,
+        ),
+        size: containerSize,
+      };
+    } else {
+      item = {
+        fillProduct: props.product,
+        quantity: 1,
+        product: secondaryProducts.find(
+          product => product._id === selectedSecondary,
+        ),
+        size: containerSize,
+      };
+    }
     addItemToCart(item);
     props.closeModal(e);
+    props.setCartIsVisible(true);
   };
 
   const getStepTwoOptions = () => {
     let returnList = [];
-    // for (var i = 0; i < productList.size; i++) {
-    //   let product = productList[i];
     secondaryProducts.forEach(product => {
       returnList.push(
         <div
@@ -55,7 +69,9 @@ export const ProductDetailCard = props => {
             setSelectedSecondary(product._id);
           }}
         >
-          <h3>{product.name}</h3>
+          <h3>
+            {product.name} - {getSecondayPrice(product)}
+          </h3>
           <p>{product.description}</p>
         </div>,
       );
@@ -63,12 +79,30 @@ export const ProductDetailCard = props => {
     return returnList;
   };
 
-  const getSizeOptions = () => {
-    return [
-      { value: 's', label: 'Small - 12x6x8 - $26.99' },
-      { value: 'm', label: 'Medium - 15x8x8 - $30.99' },
-      { value: 'l', label: 'Large - 20x10x10 - $36.99' },
-    ];
+  const setSizeOptions = () => {
+    let list = [];
+    props.product.sizes.forEach(size => {
+      let cur = size;
+      cur.label = size.label + ' - ' + size.size + ' - $' + size.price;
+      cur.value = size.size;
+      list.push(cur);
+    });
+    setSizes(list);
+  };
+
+  const getSecondayPrice = product => {
+    if (
+      product.sizes.find(size => {
+        return size.size === containerSize;
+      })
+    ) {
+      return (
+        '$' +
+        product.sizes.find(size => {
+          return size.size === containerSize;
+        }).price
+      );
+    }
   };
 
   const getStepOne = product => {
@@ -76,7 +110,7 @@ export const ProductDetailCard = props => {
       <div className='section_one'>
         <div className='product_images'>
           <div className='card_img_detail'>
-            <img />
+            <Carousel imgs={product.imgs} />
           </div>
         </div>
         <div className='detail_data'>
@@ -92,7 +126,7 @@ export const ProductDetailCard = props => {
                   {showSelectError ? <b>Must select size</b> : null}
                 </label>
                 <Select
-                  options={getSizeOptions()}
+                  options={sizes}
                   onChange={value => setContainerSize(value.value)}
                 />
               </div>

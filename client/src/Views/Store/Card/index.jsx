@@ -3,6 +3,7 @@ import ProductCardStyles from './ProductCardStyles';
 import { makeGet } from '../../../Shared/Utils/request';
 import { ProductDetailCard } from './DetailCard';
 import Modal from 'react-modal';
+import { Carousel } from '../../../Shared/Components/Carousel';
 
 Modal.setAppElement('#root');
 
@@ -24,11 +25,17 @@ export const ProductCard = props => {
   };
 
   const getPrice = () => {
-    if (props.product.type == 'Fill') {
-      return '+$3.99'; //+props.product.price;
-    } else {
-      return '$24.00 - 35.99';
-    }
+    let min = props.product.sizes[0].price;
+    let max = 0;
+    props.product.sizes.forEach(size => {
+      if (size.price < min) {
+        min = size.price;
+      }
+      if (size.price > max) {
+        max = size.price;
+      }
+    });
+    return min === max ? '$' + min : '$' + min + ' - ' + max;
   };
 
   return (
@@ -36,7 +43,7 @@ export const ProductCard = props => {
       <ProductCardStyles />
       <div className='card_data'>
         <div className='card_img'>
-          <img />
+          <img src={props.product.imgs[0]} />
         </div>
         <div className='card_data'>
           <div className='row'>
@@ -52,7 +59,11 @@ export const ProductCard = props => {
         onRequestClose={closeModal}
         style={modalStyles}
       >
-        <ProductDetailCard closeModal={closeModal} product={props.product} />
+        <ProductDetailCard
+          closeModal={closeModal}
+          product={props.product}
+          setCartIsVisible={props.setCartIsVisible}
+        />
       </Modal>
     </div>
   );

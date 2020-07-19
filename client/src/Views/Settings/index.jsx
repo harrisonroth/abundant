@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import SettingsViewStyles from './SettingsViewStyles';
 import { FaSpinner } from 'react-icons/fa';
 import { makeGet, makePost } from '../../Shared/Utils/request';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import CardSection from './CardSection';
+
+const stripePromise = loadStripe(
+  'pk_test_51H5cuhBlog3CYTmE5G41BqgL6ZhNmYgcSSf7YgykC5IX6KWBJN1jknowTKO4l3XvhWHTW4dzaDTTcf5Ymj8gmWHT00Qus2EI0C',
+);
 
 export const SettingsView = props => {
   const [settings, setSettings] = useState([]);
@@ -11,11 +18,13 @@ export const SettingsView = props => {
     props.user.settings.card.credit_card,
   );
   const [cvc, setCVC] = useState(props.user.settings.card.cvc);
-  const [zipCode, setZipCode] = useState(props.user.settings.card.zip_code);
+  const [exp_month, setExpMonth] = useState(''); //props.user.settings.card.exp_month);
+  const [exp_year, setExpYear] = useState(''); //props.user.settings.card.exp_year);
+  const [secret, setSecret] = useState('');
+  const [card, setCard] = useState('');
 
   const setSettingsList = user => {
     setLoaded(true);
-    console.log(user.settings);
     setSettings(user.settings);
   };
 
@@ -23,20 +32,32 @@ export const SettingsView = props => {
     var updated = settings;
     updated.card.credit_card = cardNumber;
     updated.card.cvc = cvc;
-    updated.card.zip_code = zipCode;
+    updated.card.exp_month = exp_month;
+    updated.card.exp_year = exp_year;
     props.updateSettings(updated);
     makePost('/auth/updateSettings', { settings: updated });
   };
 
   useEffect(() => {
     let user = props.user;
-    console.log(user);
     if (user === null) {
       makeGet('/auth/userData', setSettingsList);
     } else {
       setSettingsList(user);
     }
+
+    getCardData();
   }, []);
+
+  const getCardData = () => {
+    setSecret('');
+    makeGet('/payments/addCard', data => {
+      setSecret(data.client_secret);
+    });
+    makeGet('/payments/getCard', data => {
+      setCard(data);
+    });
+  };
 
   const getCardSettings = () => {
     if (!loaded) {
@@ -115,22 +136,29 @@ export const SettingsView = props => {
             )}
           </div>
           <div className='item'>
-            <label>Zip Code:</label>
+            <label>Expiration:</label>
             {editCardSettings ? (
-              <input
-                placeholder={zipCode}
-                value={zipCode}
-                onChange={e => setZipCode(e.target.value)}
-              />
-            ) : (
-              zipCode
+              <div className='exp'>
+                <input
+                  placeholder={exp_month}
+                  value={exp_month}
+                  onChange={e => setExpMonth(e.target.value)}
+                />
+                /
+                <input
+                  placeholder={exp_year}
+                  value={exp_year}
+                  onChange={e => setExpYear(e.target.value)}
+                />
+              </div>
+            ) : exp_month === '' ? null : (
+              `${exp_month} / ${exp_year}`
             )}
           </div>
         </div>
       </div>
     );
   };
-
   return (
     <div>
       <SettingsViewStyles />
@@ -138,7 +166,17 @@ export const SettingsView = props => {
         <h1>Settings</h1>
         <div className='cart_icon'>{props.getCartIcon()}</div>
       </div>
-      <div className='settings_sections'>{getCardSettings()}</div>
+      {/* <div className='settings_sections'>{getCardSettings()}</div> */}
+      {secret !== '' ? (
+        <Elements stripe={stripePromise}>
+          <CardSection
+            secret={secret}
+            user={props.user}
+            card={card}
+            updateCard={getCardData}
+          />
+        </Elements>
+      ) : null}
     </div>
   );
 };

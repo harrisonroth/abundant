@@ -74,7 +74,6 @@ class App extends React.Component {
   }
 
   getDrawer() {
-    console.log(this.state.user);
     let notifications_alert = null;
     if (this.state.user !== null && this.state.user.notifications.length > 0) {
       notifications_alert = (
@@ -167,7 +166,12 @@ class App extends React.Component {
                     <OrderView getCartIcon={this.getCartIcon.bind(this)} />
                   </Route>
                   <Route path='/store'>
-                    <StoreView getCartIcon={this.getCartIcon.bind(this)} />
+                    <StoreView
+                      getCartIcon={this.getCartIcon.bind(this)}
+                      setCartIsVisible={value =>
+                        this.setState({ showShoppingSidebar: value })
+                      }
+                    />
                   </Route>
                   <Route path='/notifications'>
                     <NotificationView

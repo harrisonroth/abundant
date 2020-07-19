@@ -14,6 +14,7 @@ var bottlesRouter = require('./routes/bottles');
 var orderRouter = require('./routes/order');
 var productsRouter = require('./routes/products');
 var measurementRouter = require('./routes/measurement');
+var paymentsRouter = require('./routes/payments');
 
 var updateMeasurementsDaily = require('./controllers/CronController');
 
@@ -39,6 +40,7 @@ app.use('/bottles', bottlesRouter);
 app.use('/order', orderRouter);
 app.use('/measurement', measurementRouter);
 app.use('/products', productsRouter);
+app.use('/payments', paymentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
