@@ -78,8 +78,8 @@ export const BottleCard = props => {
         </div>
         <ul>
           <li>Battery Remaining: {props.bottle.batteryPercent}</li>
-          <li>Contents: {props.bottle.contents}</li>
-          <li>Refill Product: {props.bottle.refillProduct}</li>
+          <li>Contents: {props.bottle.contentsName}</li>
+          <li>Refill Product: {props.bottle.refillContentsName}</li>
         </ul>
       </div>
 

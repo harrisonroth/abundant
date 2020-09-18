@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { color, font } from './../../../Shared/Utils/styles';
+import { color, font } from '../../../Shared/Utils/styles';
 
 export default createGlobalStyle`
     .card {

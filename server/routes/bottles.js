@@ -7,6 +7,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var VerifyToken = require('./../controllers/VerifyToken');
 var config = require('./../config');
+const Product = require('../models/productModel');
 
 /* GET current bottles */
 router.get("/", VerifyToken, function(req, res, next) {
@@ -26,21 +27,31 @@ router.get("/", VerifyToken, function(req, res, next) {
 
 router.post("/create", VerifyToken, function(req, res, next) {
     if (req.body.name &&
-        req.body.contents) {
-        data = {
-            userId: req.userId,
-            name : req.body.name,
-            batteryPercent: (req.body.batteryPercent) ? req.body.batteryPercent : null,
-            contents : req.body.contents,
-            active : true,
-            };
+        req.body.contents && req.body.size) {
+        Product.findById(req.body.contents, (err, product) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({"Error": "There was an error creating the bottle. " + err})
+            }
+            data = {
+                userId: req.userId,
+                name : req.body.name,
+                batteryPercent: (req.body.batteryPercent) ? req.body.batteryPercent : null,
+                contents : req.body.contents,
+                contentsName: product.name,
+                refillContents: req.body.contents,
+                refillContentsName: product.name,
+                active : true,
+                size: req.body.size
+                };
 
-        Bottle.create(data,
-            function (err, bottle) {
-            if (err) return res.status(500).json({"Error": "There was an error creating the bottle. " + err})
-            
-            res.status(200).json({"bottle": bottle});
+            Bottle.create(data,
+                function (err, bottle) {
+                if (err) return res.status(500).json({"Error": "There was an error creating the bottle. " + err})
+                
+                res.status(200).json({"bottle": bottle});
             });	
+        });
     } else {
         return res.status(500).json({"Error": "There was a problem creating the bottle. Not all required fields present"});
     }

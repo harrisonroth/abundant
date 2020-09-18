@@ -16,7 +16,7 @@ var productsRouter = require('./routes/products');
 var measurementRouter = require('./routes/measurement');
 var paymentsRouter = require('./routes/payments');
 
-var updateMeasurementsDaily = require('./controllers/CronController');
+var CronController = require('./controllers/CronController');
 
 var db = require('./controllers/db');
 
@@ -60,7 +60,8 @@ app.use(function(err, req, res, next) {
 });
 
 //average measurements from previous day and backlog older data
-cron.schedule("30 23 * * *", updateMeasurementsDaily);
+cron.schedule("30 23 * * *", CronController.updateMeasurementsDaily);
+cron.schedule("30 22 * * *", CronController.chargeForRefillsAndMakeOrders);
 
 app.listen(4200);
 

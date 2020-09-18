@@ -1,0 +1,252 @@
+[{
+    "_id" : ObjectId("5f1da81adfb9e95a5f806409"),
+    "items" : [ 
+        {
+            "product" : {
+                "fillProducts" : [ 
+                    "5ee7f6b6a226032eb0ea7815", 
+                    "5ee7f69ea226032eb0ea7814"
+                ],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f663a226032eb0ea7813",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard - 24oz - $22",
+                        "price" : 22,
+                        "value" : "24oz"
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large - 40oz - $34",
+                        "price" : 34,
+                        "value" : "40oz"
+                    }
+                ],
+                "name" : "Kitchen Grains",
+                "description" : "The perfect container for your kitchen, it will make sure you never run out of sugar",
+                "type" : "Container",
+                "__v" : 0
+            },
+            "quantity" : 1,
+            "fillProduct" : {
+                "fillProducts" : [],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f69ea226032eb0ea7814",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard",
+                        "price" : 8
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large",
+                        "price" : 14
+                    }
+                ],
+                "name" : "Standard Oats",
+                "description" : "The microwave oat you want",
+                "type" : "Fill",
+                "__v" : 0
+            },
+            "size" : "24oz"
+        }, 
+        {
+            "product" : {
+                "fillProducts" : [ 
+                    "5ee7f6b6a226032eb0ea7815", 
+                    "5ee7f69ea226032eb0ea7814"
+                ],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f663a226032eb0ea7813",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard - 24oz - $22 - 24oz - $22",
+                        "price" : 22,
+                        "value" : "24oz"
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large - 40oz - $34 - 40oz - $34",
+                        "price" : 34,
+                        "value" : "40oz"
+                    }
+                ],
+                "name" : "Kitchen Grains",
+                "description" : "The perfect container for your kitchen, it will make sure you never run out of sugar",
+                "type" : "Container",
+                "__v" : 0
+            },
+            "quantity" : 1,
+            "fillProduct" : {
+                "fillProducts" : [],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f6b6a226032eb0ea7815",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard",
+                        "price" : 10
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large",
+                        "price" : 16
+                    }
+                ],
+                "name" : "Steel-Cut Oats",
+                "description" : "These don't work so well in the microwave",
+                "type" : "Fill",
+                "__v" : 0
+            },
+            "size" : "40oz"
+        }, 
+        {
+            "product" : {
+                "fillProducts" : [ 
+                    "5ee7f6b6a226032eb0ea7815", 
+                    "5ee7f69ea226032eb0ea7814"
+                ],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f6dea226032eb0ea7816",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard - 24oz - $28",
+                        "price" : 28,
+                        "value" : "24oz"
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large - 40oz - $40",
+                        "price" : 40,
+                        "value" : "40oz"
+                    }
+                ],
+                "name" : "Fancy Kitchen Container",
+                "description" : "The perfect container to make your kitchen shine, and it will make sure you never run out of sugar",
+                "type" : "Container",
+                "__v" : 0
+            },
+            "quantity" : 1,
+            "fillProduct" : {
+                "fillProducts" : [],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f6b6a226032eb0ea7815",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard",
+                        "price" : 10
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large",
+                        "price" : 16
+                    }
+                ],
+                "name" : "Steel-Cut Oats",
+                "description" : "These don't work so well in the microwave",
+                "type" : "Fill",
+                "__v" : 0
+            },
+            "size" : "40oz"
+        }
+    ],
+    "userId" : ObjectId("5f1388942104ff6c1ff52e09"),
+    "status" : "0",
+    "price" : 136,
+    "trackingId" : "",
+    "stripeId" : "pi_1H9CEZBlog3CYTmEKt0JVSSB",
+    "date" : ISODate("2020-07-26T15:58:18.059Z"),
+    "__v" : 0
+},
+{
+    "_id" : ObjectId("5f14adc4a2949e553b41995a"),
+    "items" : [ 
+        {
+            "product" : {
+                "fillProducts" : [ 
+                    "5ee7f6b6a226032eb0ea7815", 
+                    "5ee7f69ea226032eb0ea7814"
+                ],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f663a226032eb0ea7813",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard - 24oz - $22",
+                        "price" : 22,
+                        "value" : "24oz"
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large - 40oz - $34",
+                        "price" : 34,
+                        "value" : "40oz"
+                    }
+                ],
+                "name" : "Kitchen Grains",
+                "description" : "The perfect container for your kitchen, it will make sure you never run out of sugar",
+                "type" : "Container",
+                "__v" : 0
+            },
+            "quantity" : 1,
+            "fillProduct" : {
+                "fillProducts" : [],
+                "imgs" : [ 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/product1.jpg?alt=media&token=009aa7ea-aee3-42b7-906c-e3954b020152", 
+                    "https://firebasestorage.googleapis.com/v0/b/abundant-edd87.appspot.com/o/oats.jpeg?alt=media&token=451dfaa4-4a5d-45cf-b620-6e2394e6193e"
+                ],
+                "_id" : "5ee7f69ea226032eb0ea7814",
+                "sizes" : [ 
+                    {
+                        "size" : "24oz",
+                        "label" : "Standard",
+                        "price" : 8
+                    }, 
+                    {
+                        "size" : "40oz",
+                        "label" : "Large",
+                        "price" : 14
+                    }
+                ],
+                "name" : "Standard Oats",
+                "description" : "The microwave oat you want",
+                "type" : "Fill",
+                "__v" : 0
+            },
+            "size" : "24oz"
+        }
+    ],
+    "userId" : ObjectId("5f1388942104ff6c1ff52e09"),
+    "status" : "0",
+    "price" : 30,
+    "trackingId" : "",
+    "stripeId" : "pi_1H6jAnBlog3CYTmEBOVTcJxS",
+    "date" : ISODate("2020-07-19T20:32:04.267Z"),
+    "__v" : 0
+}]

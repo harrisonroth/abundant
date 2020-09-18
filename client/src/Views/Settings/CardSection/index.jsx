@@ -61,8 +61,8 @@ export const CardSection = props => {
         } else {
           alert('Error saving card');
         }
+        setSaving(false);
       });
-    setSaving(false);
   };
 
   console.log(props.card);

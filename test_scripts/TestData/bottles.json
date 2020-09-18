@@ -1,0 +1,67 @@
+[{
+    "_id" : ObjectId("5ec736624df78b45cbaf7cf9"),
+    "userId" : ObjectId("5f39891b5ff692348ab458f7"),
+    "name" : "My Wheats",
+    "measurements" : [],
+    "dailyAverages" : [ 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-17T07:00:00.000Z"),
+            "percent" : 78
+        }, 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-18T07:00:00.000Z"),
+            "percent" : 74
+        }, 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-19T07:00:00.000Z"),
+            "percent" : 65
+        }, 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-20T07:00:00.000Z"),
+            "percent" : 60
+        }
+    ],
+    "batteryPercent" : 85,
+    "contents" : ObjectId("5ee7f69ea226032eb0ea7814"),
+    "refillContents" : ObjectId("5ee7f69ea226032eb0ea7814"),
+    "active" : true,
+    "__v" : 1
+},
+{
+    "_id" : ObjectId("5ec736624df78b45cbaf7cc9"),
+    "userId" : ObjectId("5f1388942104ff6c1ff52e09"),
+    "name" : "My Wheats",
+    "measurements" : [],
+    "dailyAverages" : [ 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-17T07:00:00.000Z"),
+            "percent" : 78
+        }, 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-18T07:00:00.000Z"),
+            "percent" : 74
+        }, 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-19T07:00:00.000Z"),
+            "percent" : 65
+        }, 
+        {
+            "_id" : ObjectId("5eeb09e8f7fc434f6382542e"),
+            "date" : ISODate("2020-08-20T07:00:00.000Z"),
+            "percent" : 60
+        }
+    ],
+    "batteryPercent" : 85,
+    "contents" : ObjectId("5ee7f69ea226032eb0ea7814"),
+    "refillContents" : ObjectId("5ee7f69ea226032eb0ea7814"),
+    "active" : true,
+    "__v" : 1
+}
+]

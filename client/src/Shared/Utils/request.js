@@ -88,7 +88,7 @@ export function register(data, setLoggedIn) {
     });
 }
 
-export function login(data, setLoggedIn) {
+export function login(data, setLoggedIn, setError) {
   return fetch(baseUrl + '/auth/login', {
     method: 'POST',
     headers: {
@@ -102,6 +102,7 @@ export function login(data, setLoggedIn) {
       if (response.status === 200) {
         return response.json();
       } else {
+        setError();
         return 'Error';
       }
     })

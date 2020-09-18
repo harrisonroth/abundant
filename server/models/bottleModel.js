@@ -26,15 +26,24 @@ var BottleSchema = new mongoose.Schema({
     ref: 'Product',
     required: true,
   },
+  contentsName: {
+    type: String
+  },
   refillContents: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Product',
     required: true,
   },
+  refillContentsName: {
+    type: String
+  },
   active: {
     type: Boolean,
     required: true,
-  }
+  },
+  size: {
+    type: String
+  },
 });
 mongoose.model('Bottle', BottleSchema);
 

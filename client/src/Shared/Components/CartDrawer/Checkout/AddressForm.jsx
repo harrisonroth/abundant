@@ -11,6 +11,7 @@ const AddressItem = props => {
           onChange={e => props.onChange(e.target.value)}
           className='form-control'
           placeholder={props.value}
+          pattern={props.label === 'Postal Code' ? '[0-9]{5}' : null}
         />
       </div>
     </div>
@@ -67,6 +68,7 @@ export const AddressForm = props => {
 
   return (
     <div className=''>
+      <div className='error'>{props.errorString}</div>
       <AddressInput
         street={street}
         streetOnChange={setStreet}

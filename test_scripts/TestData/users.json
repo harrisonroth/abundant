@@ -1,0 +1,73 @@
+[{
+    "_id" : ObjectId("5f39891b5ff692348ab458f7"),
+    "notifications" : [ 
+        {
+            "type" : "Welcome",
+            "value" : "Welcome to abundant, thank you for joining us!"
+        }
+    ],
+    "firstName" : "a",
+    "lastName" : "a",
+    "email" : "a@b.com",
+    "password" : "$2a$08$TsQDABdq1H3BhDJ02VuM2O0r4UkACjK5tBvDuEPcBLFvpAZAWGIhG",
+    "stripeId" : "cus_HqYfUGzGTQEfBw",
+    "settings" : {
+        "card" : {
+            "credit_card" : "",
+            "cvc" : "",
+            "zip_code" : "",
+            "exp" : "",
+            "stripeId" : ""
+        }
+    },
+    "__v" : 0
+},
+{
+    "_id" : ObjectId("5f1388942104ff6c1ff52e09"),
+    "notifications" : [ 
+        {
+            "type" : "Welcome",
+            "value" : "Welcome to abundant, thank you for joining us!"
+        }
+    ],
+    "firstName" : "new",
+    "lastName" : "one",
+    "email" : "new@one.com",
+    "password" : "$2a$08$oX84DMAK/n.C6rIF7AXbGe13rI9C3rSB1em6sD37NtcqYCHhpNtoC",
+    "stripeId" : "cus_HflAPm19LdLkLr",
+    "settings" : {
+        "card" : {
+            "credit_card" : "",
+            "cvc" : "",
+            "zip_code" : "",
+            "exp" : "",
+            "stripeId" : ""
+        }
+    },
+    "__v" : 0
+},
+{
+    "_id" : ObjectId("5f11001cd8acb040e10fa3ec"),
+    "notifications" : [ 
+        {
+            "type" : "Welcome",
+            "value" : "Welcome to abundant, thank you for joining us!"
+        }
+    ],
+    "firstName" : "new",
+    "lastName" : "one",
+    "email" : "better@me.com",
+    "password" : "$2a$08$MM3RWf1gdEmhBZ/ox0b5MuKEQyKEM2AmnynPkDW55j34Va767uk.q",
+    "stripeId" : "cus_Hf2YJHdYh4PdSd",
+    "settings" : {
+        "card" : {
+            "credit_card" : "",
+            "cvc" : "",
+            "exp_year" : "",
+            "exp_month" : "",
+            "stripeId" : ""
+        }
+    },
+    "__v" : 0
+}
+]

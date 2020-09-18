@@ -33,4 +33,9 @@ export default createGlobalStyle`
 
     }
 
+    .login_error {
+        font-style: bold;
+        color: red;
+    }
+
 `;

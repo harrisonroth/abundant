@@ -5,6 +5,7 @@ import { AddressForm } from './AddressForm';
 import { Button } from '@material-ui/core';
 import { clearCartContents } from '../../../Utils/cart';
 import { useHistory } from 'react-router-dom';
+import { CartCard } from '../Card';
 
 export const CheckoutForm = props => {
   const history = useHistory();
@@ -18,7 +19,11 @@ export const CheckoutForm = props => {
   const [sameAsShipping, setSameAsShipping] = useState(false);
 
   const [shippingDetails, setShippingDetails] = useState({});
+  const [shippingError, setShippingError] = useState('');
   const [billingDetails, setBillingDetails] = useState({});
+  const [billingError, setBillingError] = useState('');
+  const [items, setItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -28,7 +33,32 @@ export const CheckoutForm = props => {
     makePost('/payments/create-payment-intent', { items: props.items }, data =>
       setClientSecret(data.clientSecret),
     );
+
+    let itemList = [];
+    console.log(props.items);
+    var totalPrice = 0;
+    props.items.forEach(item => {
+      var itemPrice = getPrice(item, item.size);
+      totalPrice += itemPrice;
+      itemList.push(
+        <div className='order_item'>
+          <CartCard item={item} price={itemPrice} />
+        </div>,
+      );
+    });
+    setItems(itemList);
+    setTotalPrice(totalPrice);
   }, []);
+
+  const getPrice = (item, size) => {
+    let price = item.product.sizes.find(itemSize => {
+      return itemSize.size === size;
+    }).price;
+    price += item.fillProduct.sizes.find(itemSize => {
+      return itemSize.size === size;
+    }).price;
+    return price;
+  };
 
   const cardStyle = {
     style: {
@@ -125,6 +155,18 @@ export const CheckoutForm = props => {
     );
   };
 
+  const getOrderOverview = () => {
+    return (
+      <div>
+        <h3>Order Overview</h3>
+        {items}
+        <div className='overiew_price'>
+          <h3>Total Price: ${totalPrice}</h3>
+        </div>
+      </div>
+    );
+  };
+
   const setShipping = data => {
     setShippingDetails({
       name: props.user.firstName + ' ' + props.user.lastName,
@@ -140,6 +182,27 @@ export const CheckoutForm = props => {
     });
   };
 
+  const validateAddress = address => {
+    if (
+      !(
+        hasValue(address.line1) &&
+        hasValue(address.city) &&
+        hasValue(address.state) &&
+        hasValue(address.postal_code)
+      )
+    ) {
+      return 'All fields must have a value';
+    }
+
+    if (address.postal_code.length < 5) {
+      return 'Zipcode is not valid';
+    }
+  };
+
+  const hasValue = value => {
+    return value !== null && value !== '';
+  };
+
   return (
     <div className='checkout'>
       <div>
@@ -152,7 +215,11 @@ export const CheckoutForm = props => {
         {step == 'shipping' ? (
           <div className='shipping_details'>
             <h3>Shipping Address</h3>
-            <AddressForm address={shippingDetails} setAddress={setShipping} />
+            <AddressForm
+              address={shippingDetails}
+              setAddress={setShipping}
+              errorString={shippingError}
+            />
             <input
               style={{ width: '8%' }}
               type='checkbox'
@@ -166,6 +233,11 @@ export const CheckoutForm = props => {
               className='float_right'
               onClick={() => {
                 console.log(shippingDetails);
+                let errorString = validateAddress(shippingDetails.address);
+                if (errorString.length > 0) {
+                  setShippingError(errorString);
+                  return;
+                }
                 if (sameAsShipping) {
                   setStep('payment');
                   setBillingDetails(shippingDetails);
@@ -182,7 +254,27 @@ export const CheckoutForm = props => {
         {step == 'billing' ? (
           <div className='billing_details'>
             <h3>Billing Address</h3>
-            <AddressForm address={billingDetails} setAddress={setBilling} />
+            <AddressForm
+              address={billingDetails}
+              setAddress={setBilling}
+              errorString={billingError}
+            />
+
+            <Button
+              variant='contained'
+              className='float_right'
+              onClick={() => {
+                let errorString = validateAddress(billingDetails.address);
+                if (errorString.length > 0) {
+                  setBillingError(errorString);
+                  return;
+                }
+                setStep('payment');
+              }}
+            >
+              Next
+            </Button>
+
             <Button
               variant='contained'
               className='float_right'
@@ -192,20 +284,14 @@ export const CheckoutForm = props => {
             >
               Previous
             </Button>
-            <Button
-              variant='contained'
-              className='float_right'
-              onClick={() => {
-                setStep('payment');
-              }}
-            >
-              Next
-            </Button>
           </div>
         ) : null}
 
         {step == 'payment' ? (
-          <div className='payment_details'>{getStripeForm()}</div>
+          <div className='payment_step'>
+            <div className='order_overview'>{getOrderOverview()}</div>
+            <div className='payment_details'>{getStripeForm()}</div>
+          </div>
         ) : null}
       </div>
     </div>

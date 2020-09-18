@@ -73,17 +73,11 @@ router.post('/register', function(req, res) {
 
 
 router.post('/login', function(req, res) {
-	console.log(req);
 	if (req.body.email &&
 		  req.body.password) {
-			console.log("login");
-
 			authenticate(req.body.email, req.body.password, function(err, user) {
-				console.log("login");
-
 			if(err) {
-				console.log(err);
-				return res.status(500).send("There was a problem logging in.")
+				return res.status(500).send("There was a problem logging in.");
 			}
 			var token = jwt.sign({ id: user._id }, config.secret, {
 	      		expiresIn: 31536000 // expires in one year

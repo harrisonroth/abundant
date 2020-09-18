@@ -27,6 +27,14 @@ export default createGlobalStyle`
         padding-left: 1%;
     }
 
+    .order_item .item_name {
+        font-size: 110%;
+    }
+
+    .order_item .cart_card {
+        background-color: #aaa;
+    }
+
     .item_data {
         padding-top: 1%;
         padding-left: 3%;
@@ -73,6 +81,10 @@ export default createGlobalStyle`
         width: 100%;
         
         border-radius: 5px
+    }
+
+    .order_overview {
+        max-height: 80%;
     }
 
 `;

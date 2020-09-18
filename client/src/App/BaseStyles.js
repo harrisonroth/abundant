@@ -181,4 +181,9 @@ export default createGlobalStyle`
       text-align: center;
     }
 
+    .error {
+        font-style: bold;
+        color: red;
+    }
+
 `;

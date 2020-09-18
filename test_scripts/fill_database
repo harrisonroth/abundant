@@ -1,0 +1,4 @@
+mongoimport --db test --collection bottles < TestData/bottles.json --jsonArray 
+mongoimport --db test --collection orders < TestData/orders.json --jsonArray
+mongoimport --db test --collection products < TestData/products.json --jsonArray
+mongoimport --db test --collection users < TestData/users.json --jsonArray
