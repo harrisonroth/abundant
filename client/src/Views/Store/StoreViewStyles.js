@@ -8,7 +8,7 @@ export default createGlobalStyle`
         right: 0;
         left: 0;
         display: flex;
-        color: #555;
+        color: ${color.grey};
     }
 
     .store_title {

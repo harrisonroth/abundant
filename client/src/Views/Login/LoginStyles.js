@@ -5,7 +5,7 @@ export default createGlobalStyle`
 
     .login_screen {
         height: 100%;
-        background-color: #0c96f9;
+        background-color: ${color.primary};
         bottom: 0;
         position: absolute;
         right: 0;

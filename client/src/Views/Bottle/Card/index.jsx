@@ -4,6 +4,8 @@ import { Line } from 'react-chartjs-2';
 import { makeGet, makePost } from '../../../Shared/Utils/request';
 import Modal from 'react-modal';
 import { UpdateContentsModal } from './UpdateContentsModal';
+import { StylesProvider } from '@material-ui/core';
+import { color } from '../../../Shared/Utils/styles';
 
 Modal.setAppElement('#root');
 
@@ -49,8 +51,8 @@ export const BottleCard = props => {
     datasets: [
       {
         fill: true,
-        backgroundColor: '#0c96f9',
-        borderColor: '#0c96f9',
+        backgroundColor: color.primary,
+        borderColor: color.primary,
         data: graphData,
       },
     ],

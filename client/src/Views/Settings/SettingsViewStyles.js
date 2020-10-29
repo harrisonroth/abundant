@@ -19,7 +19,7 @@ export default createGlobalStyle`
 
     .settings_sections {
         background-color: #ddd;
-        color: #555;
+        color: ${color.grey};
         border-radius: 15px;
         padding: 2%;
         width: 80%;
@@ -27,7 +27,7 @@ export default createGlobalStyle`
     }
 
     .section_title {
-        border-bottom: 2px solid #555;
+        border-bottom: 2px solid ${color.grey};
     }
 
     .section_title h3 {

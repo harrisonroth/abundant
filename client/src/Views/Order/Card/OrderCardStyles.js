@@ -13,7 +13,7 @@ export default createGlobalStyle`
 
     .card {
         border-radius: 5px;
-        background-color: #eee;
+        background-color: ${color.lightGrey};
         flex-basis: 75%;
         margin: auto;
         margin-top: 2%;
@@ -87,11 +87,11 @@ export default createGlobalStyle`
     }
 
     .connector_complete {
-        background-color: #0c96f9;
+        background-color: ${color.primary};
     }
 
     .circle_complete {
-        background-color: #0c96f9;
+        background-color: ${color.primary};
     }
 
     .order_item {

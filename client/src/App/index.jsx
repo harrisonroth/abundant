@@ -21,7 +21,6 @@ import { AdminView } from '../Views/Admin';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
     this.state = {
       loggedIn: false,
       showSidebar: false,

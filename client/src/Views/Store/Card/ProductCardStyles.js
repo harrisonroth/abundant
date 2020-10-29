@@ -13,7 +13,7 @@ export default createGlobalStyle`
 
     .card {
         border-radius: 5px;
-        background-color: #eee;
+        background-color: ${color.lightGrey};
         flex-basis: 75%;
         margin: auto;
         margin-top: 2%;

@@ -94,7 +94,7 @@ export default createGlobalStyle`
         border-width: 1px;
         border-color: #aaa;
         padding: 2%;
-        background: #eee;
+        background: ${color.lightGrey};
         margin: 2px;
         border-radius: 10px;
     }

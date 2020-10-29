@@ -4,11 +4,12 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { makePost, makeGet } from '../../../Shared/Utils/request';
 import { useEffect } from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
+import { color } from '../../../Shared/Utils/styles';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
-      color: '#555',
+      color: color.grey,
       fontSize: '16px',
       '::placeholder': {
         color: '#aab7c4',

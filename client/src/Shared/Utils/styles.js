@@ -5,9 +5,10 @@ export const font = {
 };
 
 export const color = {
-  primary: '#58A4B0',
+  primary: '#0c96f9', //'#58A4B0',
   secondary: '#ABD1D7',
   white: '#FFFFFF',
   black: '#0C090D',
-  grey: '#EFF1F3',
+  grey: '#555',
+  lightGrey: '#eee',
 };

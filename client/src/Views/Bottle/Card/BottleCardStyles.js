@@ -4,7 +4,7 @@ import { color, font } from '../../../Shared/Utils/styles';
 export default createGlobalStyle`
     .card {
         border-radius: 5px;
-        background-color: #eee;
+        background-color: ${color.lightGrey};
         flex-basis: 75%;
         margin: auto;
         margin-top: 2%;
@@ -74,7 +74,7 @@ export default createGlobalStyle`
         border-width: 1px;
         border-color: #aaa;
         padding: 2%;
-        background: #eee;
+        background: ${color.lightGrey};
         margin: 2px;
         border-radius: 10px;
     }

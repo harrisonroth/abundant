@@ -21,8 +21,8 @@ export default createGlobalStyle`
     top: 0;
     right: 0;
     left: 0;
-    background-color: #555;
-    color: #0c96f9;
+    background-color: ${color.grey};
+    color: ${color.primary};
     text-align: center;
     display: none;
     height: 80px;
@@ -51,8 +51,8 @@ export default createGlobalStyle`
 
   .sidebar {
     width: 18%;
-    background-color: #555;
-    color: #0c96f9;
+    background-color: ${color.grey};
+    color: ${color.primary};
     padding: 1%;
     position: fixed;
     top: 0;
@@ -84,13 +84,13 @@ export default createGlobalStyle`
   }
 
   .menu_links {
-    color: #0c96f9;
+    color: ${color.primary};
   }
 
   .collapsable_sidebar {
     width: 30%;
-    background-color: #555;
-    color: #0c96f9;
+    background-color: ${color.grey};
+    color: ${color.primary};
     padding: 1%;
     position: fixed;
     top: 0;
@@ -102,8 +102,8 @@ export default createGlobalStyle`
 
   .collapsable_sidebar_right {
     width: 30%;
-    background-color: #555;
-    color: #0c96f9;
+    background-color: ${color.grey};
+    color: ${color.primary};
     padding: 1%;
     position: fixed;
     top: 0;
@@ -118,7 +118,7 @@ export default createGlobalStyle`
   }
 
   a {
-    color: #0c96f9;
+    color: ${color.primary};
     text-decoration: none;
   }
 
@@ -144,7 +144,7 @@ export default createGlobalStyle`
         right: 0;
         left: 0;
         display: flex;
-        color: #555;
+        color: ${color.grey};
     }
 
     .cart_icon {
@@ -177,8 +177,8 @@ export default createGlobalStyle`
     .notification_alert {
       position: absolute;
       right: 10px;
-      color: #555;
-      background-color: #0c96f9;
+      color: ${color.grey};
+      background-color: ${color.primary};
       border-radius: 20px;
       width: 20px;
       height: 20px;
@@ -192,7 +192,7 @@ export default createGlobalStyle`
 
     .success {
       font-style: bold;
-      color: #0c96f9;
+      color: ${color.primary};
     }
 
 `;
