@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { hasValue } from '../../../Utils/variableValidation';
 
 const AddressItem = props => {
   return (
@@ -69,6 +70,9 @@ export const AddressForm = props => {
   return (
     <div className=''>
       <div className='error'>{props.errorString}</div>
+      {hasValue(props.saved) ? (
+        <div className='success'>{props.saved}</div>
+      ) : null}
       <AddressInput
         street={street}
         streetOnChange={setStreet}

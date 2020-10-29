@@ -16,6 +16,7 @@ import { getCartContents } from '../Shared/Utils/cart';
 import { CartDrawer } from '../Shared/Components/CartDrawer';
 import { NotificationView } from '../Views/Notifications';
 import { SettingsView } from '../Views/Settings';
+import { AdminView } from '../Views/Admin';
 
 class App extends React.Component {
   constructor(props) {
@@ -135,7 +136,11 @@ class App extends React.Component {
                   />
                 </div>
                 <div className='header_title'>
-                  <h1>abundant</h1>
+                  <h1>
+                    <Link to={'/' + (this.state.user.admin ? 'admin' : '')}>
+                      abundant
+                    </Link>
+                  </h1>
                 </div>
                 <div className='header_menu_button'>{this.getCartIcon()}</div>
               </header>
@@ -153,7 +158,11 @@ class App extends React.Component {
               ) : null}
               {/* Sidebar */}
               <aside className='sidebar'>
-                <h1>abundant</h1>
+                <h1>
+                  <Link to={'/' + (this.state.user.admin ? 'admin' : '')}>
+                    abundant
+                  </Link>
+                </h1>
                 {this.getDrawer()}
               </aside>
 
@@ -189,6 +198,9 @@ class App extends React.Component {
                       user={this.state.user}
                       updateSettings={this.updateUserSettings.bind(this)}
                     />
+                  </Route>
+                  <Route path='/admin'>
+                    <AdminView user={this.state.user} />
                   </Route>
                 </Switch>
               </main>

@@ -1,0 +1,26 @@
+/**
+* Shows how you can use CSS to style your Element's container.
+* These classes are added to your Stripe Element by default.
+* You can override these classNames by using the options passed
+* to the CardElement component.
+* https://stripe.com/docs/js/elements_object/create_element?type=card#elements_create-options-classes
+*/
+
+.StripeElement {
+    color: #32325d;
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 1%;
+    margin-bottom: 2%;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+  }
+  
+  .address_section {
+    width: 60%;
+    margin-left: 20%;
+  }
+
+  

@@ -22,11 +22,22 @@ export const BottleView = props => {
     let cards = [];
     if (bottles.length > 0) {
       bottles.forEach(bottle => {
-        cards.push(<BottleCard bottle={bottle} key={bottle.id} />);
+        cards.push(
+          <BottleCard
+            bottle={bottle}
+            key={bottle.id}
+            updateBottles={updateBottles}
+          />,
+        );
       });
     }
     setBottleCards(cards);
   }, [bottles]);
+
+  const updateBottles = () => {
+    setLoaded(false);
+    makeGet('/bottles/', setBottleList);
+  };
 
   const noBottles = () => {
     return (

@@ -53,7 +53,20 @@ router.post('/register', function(req, res) {
 						exp: "",
 						stripeId: ""
 					}
-				}
+				},
+				shippingAddress: {
+					street: "",
+					city: "",
+					state: "",
+					zipCode: "",
+				},
+				billingAddress: {
+					street: "",
+					city: "",
+					state: "",
+					zipCode: "",
+				},
+				admin: false
 			},
 			function (err, user) {
 				console.log(err);
@@ -198,7 +211,10 @@ function getUserObjectForClient(user) {
 		lastName: user.lastName,
 		notifications: user.notifications,
 		settings: user.settings,
-		id: user._id
+		id: user._id,
+		shippingAddress: user.shippingAddress,
+		billingAddress: user.billingAddress,
+		admin: user.admin
 	}
 }
 

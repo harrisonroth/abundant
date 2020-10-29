@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var Bottle = require('./../models/bottleModel');
-var Measurement = require('./../models/measurementModel');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var VerifyToken = require('./../controllers/VerifyToken');
@@ -77,6 +76,26 @@ router.post("/:bottleId/rename", VerifyToken, function(req, res, next) {
         let bottleId = req.params.bottleId;
         let filter = {"_id": bottleId, "userId": req.userId};
         let update = {"name" : req.body.name};
+        Bottle.findOneAndUpdate(filter, update, { runValidators: true }, (err, bottle) => {
+            if (err) return res.json({
+                message: "Bottle update failed",
+                error: err,
+                status: 500
+            });
+            res.status(200).json(bottle);
+        });
+    }
+});
+
+/* POST update bottle contents */
+router.post("/:bottleId/updateContents", VerifyToken, function(req, res, next) {
+    if (req.body.refillContents && req.body.refillContentsName) {
+        let bottleId = req.params.bottleId;
+        let filter = {"_id": bottleId, "userId": req.userId};
+        let update = {
+            "refillContents" : req.body.refillContents,
+            "refillContentsName" : req.body.refillContentsName    
+        };
         Bottle.findOneAndUpdate(filter, update, { runValidators: true }, (err, bottle) => {
             if (err) return res.json({
                 message: "Bottle update failed",

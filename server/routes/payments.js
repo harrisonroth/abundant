@@ -97,7 +97,7 @@ router.post("/create-payment-intent", (req, res) => {
         }
         console.log(paymentIntent);
         res.send({
-            clientSecret: paymentIntent.client_secret
+            clientSecret: (paymentIntent) ? paymentIntent.client_secret:""
         });    
     });
 });

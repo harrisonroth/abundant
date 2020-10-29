@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import { clearCartContents } from '../../../Utils/cart';
 import { useHistory } from 'react-router-dom';
 import { CartCard } from '../Card';
+import { validateAddress } from '../../../Utils/variableValidation';
 
 export const CheckoutForm = props => {
   const history = useHistory();
@@ -35,7 +36,6 @@ export const CheckoutForm = props => {
     );
 
     let itemList = [];
-    console.log(props.items);
     var totalPrice = 0;
     props.items.forEach(item => {
       var itemPrice = getPrice(item, item.size);
@@ -182,27 +182,6 @@ export const CheckoutForm = props => {
     });
   };
 
-  const validateAddress = address => {
-    if (
-      !(
-        hasValue(address.line1) &&
-        hasValue(address.city) &&
-        hasValue(address.state) &&
-        hasValue(address.postal_code)
-      )
-    ) {
-      return 'All fields must have a value';
-    }
-
-    if (address.postal_code.length < 5) {
-      return 'Zipcode is not valid';
-    }
-  };
-
-  const hasValue = value => {
-    return value !== null && value !== '';
-  };
-
   return (
     <div className='checkout'>
       <div>
@@ -216,13 +195,14 @@ export const CheckoutForm = props => {
           <div className='shipping_details'>
             <h3>Shipping Address</h3>
             <AddressForm
-              address={shippingDetails}
+              address={shippingDetails.address}
               setAddress={setShipping}
               errorString={shippingError}
             />
             <input
               style={{ width: '8%' }}
               type='checkbox'
+              checked={sameAsShipping}
               onChange={() => {
                 setSameAsShipping(!sameAsShipping);
               }}
@@ -232,7 +212,6 @@ export const CheckoutForm = props => {
               variant='contained'
               className='float_right'
               onClick={() => {
-                console.log(shippingDetails);
                 let errorString = validateAddress(shippingDetails.address);
                 if (errorString.length > 0) {
                   setShippingError(errorString);
@@ -255,7 +234,7 @@ export const CheckoutForm = props => {
           <div className='billing_details'>
             <h3>Billing Address</h3>
             <AddressForm
-              address={billingDetails}
+              address={billingDetails.address}
               setAddress={setBilling}
               errorString={billingError}
             />
@@ -291,6 +270,19 @@ export const CheckoutForm = props => {
           <div className='payment_step'>
             <div className='order_overview'>{getOrderOverview()}</div>
             <div className='payment_details'>{getStripeForm()}</div>
+            <Button
+              variant='contained'
+              className='float_right'
+              onClick={() => {
+                if (sameAsShipping) {
+                  setStep('shipping');
+                } else {
+                  setStep('billing');
+                }
+              }}
+            >
+              Previous
+            </Button>
           </div>
         ) : null}
       </div>

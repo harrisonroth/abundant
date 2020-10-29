@@ -5,6 +5,7 @@ import { makeGet, makePost } from '../../Shared/Utils/request';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CardSection from './CardSection';
+import { AddressSection } from './AddressSection';
 
 const stripePromise = loadStripe(
   'pk_test_51H5cuhBlog3CYTmE5G41BqgL6ZhNmYgcSSf7YgykC5IX6KWBJN1jknowTKO4l3XvhWHTW4dzaDTTcf5Ymj8gmWHT00Qus2EI0C',
@@ -159,6 +160,7 @@ export const SettingsView = props => {
       </div>
     );
   };
+
   return (
     <div>
       <SettingsViewStyles />
@@ -175,6 +177,8 @@ export const SettingsView = props => {
             card={card}
             updateCard={getCardData}
           />
+          <br></br>
+          <AddressSection user={props.user} />
         </Elements>
       ) : null}
     </div>

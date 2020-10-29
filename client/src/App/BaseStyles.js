@@ -12,6 +12,10 @@ export default createGlobalStyle`
     position: relative;
   }
 
+  .flex {
+    display: flex;
+  }
+
   header {
     position: absolute;
     top: 0;
@@ -184,6 +188,11 @@ export default createGlobalStyle`
     .error {
         font-style: bold;
         color: red;
+    }
+
+    .success {
+      font-style: bold;
+      color: #0c96f9;
     }
 
 `;

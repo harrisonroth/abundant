@@ -20,12 +20,24 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  notifications: {type: Array},
+  notifications: 
+  {
+    type: Array
+  },
   settings: {
     type: Object
   },
   stripeId: {
     type: String
+  },
+  shippingAddress: {
+    type: Object
+  },
+  billingAddress: {
+    type: Object
+  },
+  admin: {
+    type: Boolean
   }
 });
 mongoose.model('User', UserSchema);

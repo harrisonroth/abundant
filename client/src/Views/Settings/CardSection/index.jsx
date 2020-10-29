@@ -3,6 +3,7 @@ import './CardSectionStyles.css';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { makePost, makeGet } from '../../../Shared/Utils/request';
 import { useEffect } from 'react';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -24,6 +25,7 @@ export const CardSection = props => {
   const stripe = useStripe();
   const elements = useElements();
   const [saving, setSaving] = React.useState(false);
+  const [show, setShow] = React.useState(false);
   // useEffect(()=> {
   //   stripe
   //   .retrieveSource({
@@ -35,6 +37,11 @@ export const CardSection = props => {
   //   });
   // }
   // , []);
+
+  const setShowValue = event => {
+    event.preventDefault();
+    setShow(!show);
+  };
 
   console.log(props.secret);
   const handleSubmit = event => {
@@ -70,24 +77,29 @@ export const CardSection = props => {
   return (
     <div className='card_settings'>
       <div>
-        <h3>Card Settings</h3>
-        {props.card ? (
+        <h3 onClick={setShowValue}>
+          Card Settings{' '}
+          {show ? <FaCaretUp></FaCaretUp> : <FaCaretDown></FaCaretDown>}{' '}
+        </h3>
+        {props.card && show ? (
           <div className='current_card'>
             <h4>Current Card</h4>
             {props.card.data.brand.toUpperCase()} : {props.card.data.last4}
           </div>
         ) : null}
       </div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <h4>{props.card ? 'Replace ' : 'Add '}Card</h4>
+      {show ? (
+        <form onSubmit={handleSubmit}>
+          <label>
+            <h4>{props.card ? 'Replace ' : 'Add '}Card</h4>
 
-          <CardElement options={CARD_ELEMENT_OPTIONS} />
-        </label>
-        <button className='float_right' disabled={!stripe && !saving}>
-          Save Card
-        </button>
-      </form>
+            <CardElement options={CARD_ELEMENT_OPTIONS} />
+          </label>
+          <button className='float_right' disabled={!stripe && !saving}>
+            Save Card
+          </button>
+        </form>
+      ) : null}
     </div>
   );
 };

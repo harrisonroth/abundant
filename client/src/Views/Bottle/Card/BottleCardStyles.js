@@ -44,7 +44,7 @@ export default createGlobalStyle`
     }
 
     .title_div {
-        width: 85%
+        margin-right: 10%;
     }
 
     .edit_pen {
@@ -57,5 +57,39 @@ export default createGlobalStyle`
 
     button {
         font-size: 75%;
+    }
+
+
+    .content {
+        display: flex;
+    }
+
+    .options {
+        overflow-y: scroll;
+        width: 30%;
+    }
+
+    .option {
+        border-style: solid;
+        border-width: 1px;
+        border-color: #aaa;
+        padding: 2%;
+        background: #eee;
+        margin: 2px;
+        border-radius: 10px;
+    }
+
+    .selected_option {
+        background: #ddd;
+    }
+
+    .option_details {
+        width: 65%;
+        margin-left: 2.5%;
+    }
+
+    .card_img_detail {
+        width: 50%;
+        margin-left: 25%;
     }
 `;

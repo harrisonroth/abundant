@@ -1,12 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import BottleCardStyles from './BottleCardStyles';
 import { Line } from 'react-chartjs-2';
-import { FaPencilAlt } from 'react-icons/fa';
-import { makePost } from '../../../Shared/Utils/request';
+import { makeGet, makePost } from '../../../Shared/Utils/request';
+import Modal from 'react-modal';
+import { UpdateContentsModal } from './UpdateContentsModal';
+
+Modal.setAppElement('#root');
 
 export const BottleCard = props => {
   const [editName, setEditName] = useState(false);
   const [cardName, setCardName] = useState(props.bottle.name);
+  const [products, setProducts] = useState([]);
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    makeGet('/products/fill', setProducts);
+  }, []);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = e => {
+    e.stopPropagation();
+    setIsOpen(false);
+  };
+
+  const modalStyles = {
+    content: {
+      borderRadius: '15px',
+    },
+  };
 
   const updateCardSettings = () => {
     makePost('/bottles/' + props.bottle._id + '/rename', { name: cardName });
@@ -64,14 +89,10 @@ export const BottleCard = props => {
               </button>
             </div>
           ) : (
-            <div className='title_div'>
-              {cardName}
+            <div className='flex'>
+              <div className='title_div'>{cardName}</div>
               <div className='edit_pen'>
-                <FaPencilAlt
-                  height='40'
-                  width='40'
-                  onClick={() => setEditName(true)}
-                />
+                <button onClick={() => setEditName(true)}>Edit</button>
               </div>
             </div>
           )}
@@ -80,6 +101,9 @@ export const BottleCard = props => {
           <li>Battery Remaining: {props.bottle.batteryPercent}</li>
           <li>Contents: {props.bottle.contentsName}</li>
           <li>Refill Product: {props.bottle.refillContentsName}</li>
+          <div>
+            <button onClick={() => openModal()}>Change Refill Product</button>
+          </div>
         </ul>
       </div>
 
@@ -126,6 +150,18 @@ export const BottleCard = props => {
         />
       </div>
       <div className='card_stats'></div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={modalStyles}
+      >
+        <UpdateContentsModal
+          bottle={props.bottle}
+          products={products}
+          closeModal={closeModal}
+          updateBottles={props.updateBottles}
+        />
+      </Modal>
     </div>
   );
 };
