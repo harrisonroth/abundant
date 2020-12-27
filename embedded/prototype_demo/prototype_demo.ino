@@ -29,8 +29,8 @@ void handleRoot() {
 }
 
 void ingestWifiInfo() {
-  String wifi = "oof";//server.arg("name");
-  String password = "ouchowiemybones";//server.arg("password");
+  String wifi = server.arg("name");
+  String password = server.arg("password");
   Serial.print("Wifi Name: ");
   Serial.println(wifi);
 
