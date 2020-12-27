@@ -1,5 +1,19 @@
 /* Create a WiFi access point and provide a web server on it. */
  
+
+/**
+
+Running test:
+1. Upload to chip (via arduino ide)
+2. Check for "AbundantSetup" wifi and connect to it with another device
+3. On that device, go to "abundant.com"
+4. Enter your wifi credentials
+5. If you no longer see AbundantSetup, it is connected to your wifi (you can check through router to confirm)
+
+Can update host ip to call backend on local wifi
+
+**/
+
 #include <ESP8266WebServer.h> 
 #include <DNSServer.h>
 #include <WiFiClientSecure.h>
