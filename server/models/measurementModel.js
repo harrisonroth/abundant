@@ -7,7 +7,12 @@ var MeasurementSchema = new mongoose.Schema({
         required: true,
     },
     datetime: Date,
-    percent: Number
+    percent: Number,
+    contents: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Product',
+        required: true,
+    },
 });
 mongoose.model('Measurement', MeasurementSchema);
 

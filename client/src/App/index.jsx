@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import './FontStyles.css';
 import NormalizeStyles from './NormalizeStyles';
 import BaseStyles from './BaseStyles';
@@ -17,69 +17,57 @@ import { CartDrawer } from '../Shared/Components/CartDrawer';
 import { NotificationView } from '../Views/Notifications';
 import { SettingsView } from '../Views/Settings';
 import { AdminView } from '../Views/Admin';
+import { validateAddress } from '../Shared/Utils/variableValidation';
+import { LoadingAnimation } from '../Shared/Components/LoadingAnimation';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: false,
-      showSidebar: false,
-      showShoppingSidebar: false,
-      user: null,
-    };
-  }
+const App = props => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [showShoppingSidebar, setShowShoppingSidebar] = useState(false);
+  const [user, setUser] = useState(null);
+  const [checkingForUser, setCheckingForUser] = useState(true);
 
-  validateAuth() {
-    let validateAuth = checkAuth(user =>
-      this.setState({ loggedIn: true, user: user }),
-    );
-  }
+  useEffect(() => {
+    checkAuth(user => {
+      setLoggedIn(true);
+      setUser(user);
+      setCheckingForUser(false);
+    });
+  }, []);
 
-  setLoggedIn(value) {
-    this.setState({ loggedIn: value });
-  }
-
-  updateUserNotifications(notifications) {
-    let updatedValue = this.state.user;
+  const updateUserNotifications = notifications => {
+    let updatedValue = user;
     updatedValue.notifications = notifications;
-    this.setState({ user: updatedValue });
-  }
+    setUser(updatedValue);
+  };
 
-  updateUserSettings(settings) {
-    let updatedValue = this.state.user;
+  const updateUserSettings = settings => {
+    let updatedValue = user;
     updatedValue.settings = settings;
-    this.setState({ user: updatedValue });
-  }
+    setUser(updatedValue);
+  };
 
-  componentDidMount() {
-    this.validateAuth();
-  }
-
-  logout() {
-    this.setState({ loggedIn: false });
+  const logout = () => {
+    setLoggedIn(false);
     localStorage.clear();
-  }
+  };
 
-  getCartIcon() {
+  const getCartIcon = () => {
     return (
       <FaShoppingCart
         size={28}
         onClick={() => {
-          this.setState({
-            showShoppingSidebar: !this.state.showShoppingSidebar,
-          });
+          setShowShoppingSidebar(!showShoppingSidebar);
         }}
       />
     );
-  }
+  };
 
-  getDrawer() {
+  const getDrawer = () => {
     let notifications_alert = null;
-    if (this.state.user !== null && this.state.user.notifications.length > 0) {
+    if (user !== null && user.notifications.length > 0) {
       notifications_alert = (
-        <div className='notification_alert'>
-          {this.state.user.notifications.length}
-        </div>
+        <div className='notification_alert'>{user.notifications.length}</div>
       );
     }
     return (
@@ -103,7 +91,7 @@ class App extends React.Component {
             to={''}
             key='Logout'
             onClick={() => {
-              this.logout();
+              logout();
             }}
           >
             <ListItem button>
@@ -114,109 +102,109 @@ class App extends React.Component {
         <Divider />
       </div>
     );
-  }
+  };
 
-  render() {
-    if (this.state.loggedIn) {
-      return (
-        <Fragment>
-          <NormalizeStyles />
-          <BaseStyles />
-          <div className='content'>
-            <Router>
-              {/* Header */}
-              <header>
-                <div className='header_menu_button'>
-                  <FaBars
-                    size={28}
-                    onClick={() => {
-                      this.setState({ showSidebar: !this.state.showSidebar });
-                    }}
-                  />
-                </div>
-                <div className='header_title'>
-                  <h1>
-                    <Link to={'/' + (this.state.user.admin ? 'admin' : '')}>
-                      abundant
-                    </Link>
-                  </h1>
-                </div>
-                <div className='header_menu_button'>{this.getCartIcon()}</div>
-              </header>
-              {this.state.showSidebar ? (
-                <div className='collapsable_sidebar'>{this.getDrawer()}</div>
-              ) : null}
-              {this.state.showShoppingSidebar ? (
-                <CartDrawer
-                  setIsVisible={value =>
-                    this.setState({ showShoppingSidebar: value })
-                  }
-                  isVisible={this.state.showSidebar}
-                  user={this.state.user}
+  const siteContents = () => {
+    return (
+      <Fragment>
+        <NormalizeStyles />
+        <BaseStyles />
+        <div className='content'>
+          <Router>
+            {/* Header */}
+            <header>
+              <div className='header_menu_button'>
+                <FaBars
+                  size={28}
+                  onClick={() => {
+                    setShowSidebar(!showSidebar);
+                  }}
                 />
-              ) : null}
-              {/* Sidebar */}
-              <aside className='sidebar'>
+              </div>
+              <div className='header_title'>
                 <h1>
-                  <Link to={'/' + (this.state.user.admin ? 'admin' : '')}>
+                  <Link to={'/' + (user != null && user.admin ? 'admin' : '')}>
                     abundant
                   </Link>
                 </h1>
-                {this.getDrawer()}
-              </aside>
+              </div>
+              <div className='header_menu_button'>{getCartIcon()}</div>
+            </header>
+            {showSidebar ? (
+              <div className='collapsable_sidebar'>{getDrawer()}</div>
+            ) : null}
+            {showShoppingSidebar ? (
+              <CartDrawer
+                setIsVisible={value => setShowShoppingSidebar(value)}
+                isVisible={showSidebar}
+                user={user}
+              />
+            ) : null}
+            {/* Sidebar */}
+            <aside className='sidebar'>
+              <h1>
+                <Link to={'/' + (user != null && user.admin ? 'admin' : '')}>
+                  abundant
+                </Link>
+              </h1>
+              {getDrawer()}
+            </aside>
 
-              {/* Main */}
-              <main className='main'>
-                <Switch>
-                  <Route exact path='/'>
-                    <BottleView getCartIcon={this.getCartIcon.bind(this)} />
-                  </Route>
-                  <Route path='/orders'>
-                    <OrderView getCartIcon={this.getCartIcon.bind(this)} />
-                  </Route>
-                  <Route path='/store'>
-                    <StoreView
-                      getCartIcon={this.getCartIcon.bind(this)}
-                      setCartIsVisible={value =>
-                        this.setState({ showShoppingSidebar: value })
-                      }
-                    />
-                  </Route>
-                  <Route path='/notifications'>
-                    <NotificationView
-                      getCartIcon={this.getCartIcon.bind(this)}
-                      user={this.state.user}
-                      updateNotifications={this.updateUserNotifications.bind(
-                        this,
-                      )}
-                    />
-                  </Route>
-                  <Route path='/settings'>
-                    <SettingsView
-                      getCartIcon={this.getCartIcon.bind(this)}
-                      user={this.state.user}
-                      updateSettings={this.updateUserSettings.bind(this)}
-                    />
-                  </Route>
-                  <Route path='/admin'>
-                    <AdminView user={this.state.user} />
-                  </Route>
-                </Switch>
-              </main>
-            </Router>
-          </div>
-        </Fragment>
-      );
-    } else {
-      return (
-        <Fragment>
-          <NormalizeStyles />
-          <BaseStyles />
-          <LogInScreen setLoggedIn={x => this.setLoggedIn(x)} />
-        </Fragment>
-      );
-    }
+            {/* Main */}
+            <main className='main'>
+              <Switch>
+                <Route exact path='/'>
+                  <BottleView getCartIcon={getCartIcon.bind(this)} />
+                </Route>
+                <Route path='/orders'>
+                  <OrderView getCartIcon={getCartIcon.bind(this)} />
+                </Route>
+                <Route path='/store'>
+                  <StoreView
+                    getCartIcon={getCartIcon.bind(this)}
+                    setCartIsVisible={value => setShowShoppingSidebar(value)}
+                  />
+                </Route>
+                <Route path='/notifications'>
+                  <NotificationView
+                    getCartIcon={getCartIcon.bind(this)}
+                    user={user}
+                    updateNotifications={updateUserNotifications.bind(this)}
+                  />
+                </Route>
+                <Route path='/settings'>
+                  <SettingsView
+                    getCartIcon={getCartIcon.bind(this)}
+                    user={user}
+                    updateSettings={updateUserSettings.bind(this)}
+                  />
+                </Route>
+                <Route path='/admin'>
+                  <AdminView user={user} />
+                </Route>
+              </Switch>
+            </main>
+          </Router>
+        </div>
+      </Fragment>
+    );
+  };
+
+  if (checkingForUser) {
+    return null;
   }
-}
+
+  if (loggedIn) {
+    return siteContents();
+  } else {
+    return (
+      <Fragment>
+        <NormalizeStyles />
+        <BaseStyles />
+        <LogInScreen setLoggedIn={x => setLoggedIn(x)} />
+      </Fragment>
+    );
+  }
+};
 
 export default App;

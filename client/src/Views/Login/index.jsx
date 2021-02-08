@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { login, register } from '../../Shared/Utils/request';
 import LoginStyles from './LoginStyles';
+import WAVES from 'vanta/dist/vanta.waves.min';
 
 export function LogInScreen(props) {
   const [username, setUsername] = React.useState('');
@@ -10,6 +11,23 @@ export function LogInScreen(props) {
   const [isRegister, setIsRegister] = React.useState(true);
   const [error, setLogInError] = React.useState(false);
   const [errorString, setErrorString] = React.useState('');
+  const [vantaEffect, setVantaEffect] = React.useState(0);
+  const myRef = React.useRef('.login_screen');
+
+  React.useEffect(() => {
+    console.log(WAVES);
+    if (!vantaEffect) {
+      setVantaEffect(
+        WAVES({
+          el: myRef.current,
+          mouseControls: false,
+        }),
+      );
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
 
   const submitLogin = () => {
     if (username && password) {
@@ -56,9 +74,9 @@ export function LogInScreen(props) {
     <div className='login_screen'>
       <LoginStyles />
       <div className='login_content'>
-        <h1>abundant</h1>
         {isRegister ? (
           <div>
+            <h1>welcome to abundant</h1>
             {error ? (
               <div className='login_error'>
                 {errorString !== ''
@@ -97,38 +115,50 @@ export function LogInScreen(props) {
               <button title='Register' variant='contained'>
                 Register
               </button>
-              <div>
-                <a onClick={() => setIsRegister(false)}>
-                  Already have an account
-                </a>
-              </div>
+              <p onClick={() => setIsRegister(false)}>
+                Already have an account?
+              </p>
             </form>
           </div>
         ) : (
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              submitLogin();
-            }}
-          >
-            {error ? (
-              <div className='login_error'>Email or Password is incorrect</div>
-            ) : null}
-            <input
-              placeholder='Username'
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-            />
-            <input
-              placeholder='Password'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              type={'password'}
-            />
-            <button title='Log In' variant='contained' type='submit'>
-              Log In
-            </button>
-          </form>
+          <div>
+            <h1 className='has_account'>welcome to abundant</h1>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                submitLogin();
+              }}
+            >
+              {error ? (
+                <div className='login_error'>
+                  Email or Password is incorrect
+                </div>
+              ) : null}
+              <input
+                className='has_account'
+                placeholder='Email'
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+              />
+              <input
+                className='has_account'
+                placeholder='Password'
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                type={'password'}
+              />
+              <button
+                id='has_account'
+                title='Log In'
+                variant='contained'
+                type='submit'
+              >
+                Log In
+              </button>
+              <p>Forgot Password?</p>
+              <p onClick={() => setIsRegister(true)}>Don't have an account?</p>
+            </form>
+          </div>
         )}
       </div>
     </div>

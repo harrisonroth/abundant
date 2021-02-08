@@ -1,0 +1,28 @@
+{
+  "name": "abundant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm start",
+    "server": "cd server && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harrisonroth/abundant.git"
+  },
+  "keywords": [],
+  "author": "Harrison Roth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harrisonroth/abundant/issues"
+  },
+  "homepage": "https://github.com/harrisonroth/abundant#readme"
+}
