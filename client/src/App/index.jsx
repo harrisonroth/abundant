@@ -18,7 +18,6 @@ import { NotificationView } from '../Views/Notifications';
 import { SettingsView } from '../Views/Settings';
 import { AdminView } from '../Views/Admin';
 import { validateAddress } from '../Shared/Utils/variableValidation';
-import { LoadingAnimation } from '../Shared/Components/LoadingAnimation';
 
 const App = props => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -104,7 +103,68 @@ const App = props => {
     );
   };
 
-  const siteContents = () => {
+  const getHeader = () => {
+    return (
+      <header>
+        <div className='header_menu_button'>
+          <FaBars
+            size={28}
+            onClick={() => {
+              setShowSidebar(!showSidebar);
+            }}
+          />
+        </div>
+        <div className='header_title'>
+          <h1>
+            <Link to={'/' + (user != null && user.admin ? 'admin' : '')}>
+              abundant
+            </Link>
+          </h1>
+        </div>
+        <div className='header_menu_button'>{getCartIcon()}</div>
+      </header>
+    );
+  };
+
+  const getMainContents = () => {
+    return (
+      <main className='main'>
+        <Switch>
+          <Route exact path='/'>
+            <BottleView getCartIcon={getCartIcon.bind(this)} />
+          </Route>
+          <Route path='/orders'>
+            <OrderView getCartIcon={getCartIcon.bind(this)} />
+          </Route>
+          <Route path='/store'>
+            <StoreView
+              getCartIcon={getCartIcon.bind(this)}
+              setCartIsVisible={value => setShowShoppingSidebar(value)}
+            />
+          </Route>
+          <Route path='/notifications'>
+            <NotificationView
+              getCartIcon={getCartIcon.bind(this)}
+              user={user}
+              updateNotifications={updateUserNotifications.bind(this)}
+            />
+          </Route>
+          <Route path='/settings'>
+            <SettingsView
+              getCartIcon={getCartIcon.bind(this)}
+              user={user}
+              updateSettings={updateUserSettings.bind(this)}
+            />
+          </Route>
+          <Route path='/admin'>
+            <AdminView user={user} />
+          </Route>
+        </Switch>
+      </main>
+    );
+  };
+
+  const getAppContents = () => {
     return (
       <Fragment>
         <NormalizeStyles />
@@ -112,24 +172,7 @@ const App = props => {
         <div className='content'>
           <Router>
             {/* Header */}
-            <header>
-              <div className='header_menu_button'>
-                <FaBars
-                  size={28}
-                  onClick={() => {
-                    setShowSidebar(!showSidebar);
-                  }}
-                />
-              </div>
-              <div className='header_title'>
-                <h1>
-                  <Link to={'/' + (user != null && user.admin ? 'admin' : '')}>
-                    abundant
-                  </Link>
-                </h1>
-              </div>
-              <div className='header_menu_button'>{getCartIcon()}</div>
-            </header>
+            {getHeader()}
             {showSidebar ? (
               <div className='collapsable_sidebar'>{getDrawer()}</div>
             ) : null}
@@ -151,39 +194,7 @@ const App = props => {
             </aside>
 
             {/* Main */}
-            <main className='main'>
-              <Switch>
-                <Route exact path='/'>
-                  <BottleView getCartIcon={getCartIcon.bind(this)} />
-                </Route>
-                <Route path='/orders'>
-                  <OrderView getCartIcon={getCartIcon.bind(this)} />
-                </Route>
-                <Route path='/store'>
-                  <StoreView
-                    getCartIcon={getCartIcon.bind(this)}
-                    setCartIsVisible={value => setShowShoppingSidebar(value)}
-                  />
-                </Route>
-                <Route path='/notifications'>
-                  <NotificationView
-                    getCartIcon={getCartIcon.bind(this)}
-                    user={user}
-                    updateNotifications={updateUserNotifications.bind(this)}
-                  />
-                </Route>
-                <Route path='/settings'>
-                  <SettingsView
-                    getCartIcon={getCartIcon.bind(this)}
-                    user={user}
-                    updateSettings={updateUserSettings.bind(this)}
-                  />
-                </Route>
-                <Route path='/admin'>
-                  <AdminView user={user} />
-                </Route>
-              </Switch>
-            </main>
+            {getMainContents()}
           </Router>
         </div>
       </Fragment>
@@ -195,7 +206,7 @@ const App = props => {
   }
 
   if (loggedIn) {
-    return siteContents();
+    return getAppContents();
   } else {
     return (
       <Fragment>
