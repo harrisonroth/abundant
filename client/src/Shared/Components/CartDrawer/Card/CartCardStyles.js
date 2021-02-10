@@ -18,6 +18,14 @@ export default createGlobalStyle`
 
     .cart_title {
         margin-left: 2%;
+        @media only screen and (max-width: 599px) {
+            display: none;
+        }
+    }
+    .close {
+        @media only screen and (max-width: 599px) {
+            display: none;
+        }
     }
 
     .item_name {
@@ -42,7 +50,8 @@ export default createGlobalStyle`
 
     .cart_list {
         height: 80%;
-        overflow-y: scroll;
+        overflow-y: auto;
+        margin-bottom: 5%;
     }
 
     .cart_buttons {

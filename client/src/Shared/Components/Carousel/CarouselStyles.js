@@ -4,7 +4,7 @@ import { color, font } from './../../Utils/styles';
 export default createGlobalStyle`
 
     .slide-arrow {
-        padding-top: 45%;
+        padding-top: 40%;
         background-color: white;
         padding-left: 1%;
         padding-right: 1%;

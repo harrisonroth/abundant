@@ -39,7 +39,7 @@ export const NotificationView = props => {
     if (!loaded) {
       return (
         <div className='no_notifications'>
-          <FaSpinner height='40' width='40' />
+          <FaSpinner className='spinner' height='40' width='40' />
         </div>
       );
     }

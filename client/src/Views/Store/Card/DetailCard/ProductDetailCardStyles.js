@@ -17,7 +17,7 @@ export default createGlobalStyle`
     .carousel img {
         width: 20%;
         margin-left: 2.5%;
-        @media only screen and (max-width: 599px) {
+        @media only screen and (max-width: 899px) {
             margin-left: 5vw;
         }
     }
@@ -28,29 +28,38 @@ export default createGlobalStyle`
 
     .section_one {
         display: flex;
+        flex-wrap: wrap;
         padding-top: 2%;
-        @media only screen and (max-width: 599px) {
+        @media only screen and (max-width: 699px) {
             flex-direction: column;
         }
     }
 
+    .break {
+        flex-basis: 100%;
+        height: 0;
+    }
+
     .product_images {
-        width: 50%;
-        @media only screen and (max-width: 599px) {
+        flex-basis: 50%;
+        @media only screen and (max-width: 699px) {
             flex-basis: 90%;
         }
     }
 
-    .detail_contents {
-        flex-wrap: wrap;
-        padding: 0% 5%;
-    }
-
     .detail_data {
+        flex-basis: 50%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        width: 50%; 
+    }
+
+    .detail_options {
+        width: 60%;
+        margin-left: 50%;
+    }
+
+    .next_step_button {
+        margin-top: 1em;
     }
 
     .selector_container {
@@ -60,7 +69,7 @@ export default createGlobalStyle`
     }
 
     .select_option {
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 25vw;
         width: 20%;
     }
@@ -85,7 +94,7 @@ export default createGlobalStyle`
     }
 
     .options {
-        overflow-y: scroll;
+        overflow-y: auto;
         width: 30%;
     }
 

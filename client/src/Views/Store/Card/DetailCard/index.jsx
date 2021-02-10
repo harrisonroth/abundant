@@ -23,7 +23,9 @@ export const ProductDetailCard = props => {
   };
 
   useEffect(() => {
-    setSizeOptions();
+    if (sizes.length === 0) {
+      setSizeOptions();
+    }
     makeGet(
       '/products/' + (props.product.type === 'Fill' ? 'container' : 'fill'),
       setProductList,
@@ -81,8 +83,9 @@ export const ProductDetailCard = props => {
 
   const setSizeOptions = () => {
     let list = [];
+    console.log('Set sizes', props.product.sizes);
     props.product.sizes.forEach(size => {
-      let cur = size;
+      let cur = JSON.parse(JSON.stringify(size));
       cur.label = size.label + ' - ' + size.size + ' - $' + size.price;
       cur.value = size.size;
       list.push(cur);
@@ -114,24 +117,26 @@ export const ProductDetailCard = props => {
           </div>
         </div>
         <div className='detail_data'>
-          <div className='detail_contents'>
-            <div className='detail_title'>
-              <h2>{product.name}</h2>
-            </div>
-            <div className='product_description'>{product.description}</div>
-            {product.type === 'Container' ? (
-              <div className='size_selector'>
-                <label>
-                  Select Size:{' '}
-                  {showSelectError ? <b>Must select size</b> : null}
-                </label>
-                <Select
-                  options={sizes}
-                  onChange={value => setContainerSize(value.value)}
-                />
-              </div>
-            ) : null}
+          <div className='detail_title'>
+            <h1>{product.name}</h1>
           </div>
+          <div className='product_description'>
+            <p>{product.description}</p>
+          </div>
+        </div>
+        <div className='break' />
+        <div className='detail_options'>
+          {product.type === 'Container' ? (
+            <div className='size_selector'>
+              <label>
+                Select Size: {showSelectError ? <b>Must select size</b> : null}
+              </label>
+              <Select
+                options={sizes}
+                onChange={value => setContainerSize(value.value)}
+              />
+            </div>
+          ) : null}
           {step == 1 ? (
             <div className='next_step_button'>
               <Button
@@ -190,7 +195,6 @@ export const ProductDetailCard = props => {
 
   return (
     <div className='detail_card'>
-      <ProductCardStyles />
       <div>
         <span className='close' onClick={props.closeModal}>
           &times;

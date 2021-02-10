@@ -195,4 +195,12 @@ export default createGlobalStyle`
       color: ${color.primary};
     }
 
+    .spinner {
+      -webkit-animation: spin 1.5s infinite linear;
+    }
+
+    @-webkit-keyframes spin {
+      0%  {-webkit-transform: rotate(0deg);}
+      100% {-webkit-transform: rotate(360deg);}   
+    }
 `;

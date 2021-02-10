@@ -30,7 +30,7 @@ export const OrderView = props => {
     return (
       <div className='no_orders'>
         {!loaded ? (
-          <FaSpinner height='40' width='40' />
+          <FaSpinner className='spinner' height='40' width='40' />
         ) : (
           'No orders are associated with your account'
         )}

@@ -12,19 +12,18 @@ export default createGlobalStyle`
     }
 
     .card {
+        margin-top: 1em;
         border-radius: 5px;
         background-color: ${color.lightGrey};
-        flex-basis: 75%;
-        margin: auto;
-        margin-top: 2%;
         box-shadow: 5px 5px 5px #aaa;
-        flex-direction: column;
-        padding: 2% 2%;
+        padding: 2.5% 2.5%;
         display: flex;
         align-items: start;
-        width: 80%;
-        @media only screen and (max-width: 599px) {
-            margin-top: 5%;
+        width: 60%;
+        margin-left: 20%;
+        @media only screen and (max-width: 799px) {
+            width: 80%;
+            margin-left: 10%;
         }
     }
 
@@ -35,6 +34,15 @@ export default createGlobalStyle`
     .card_title {
         font-weight: bold;
         font-size: 150%;
+        width: 85%;
+        color:  ${color.grey};
+    }
+
+    .description {
+        margin-top: 1em;
+        @media only screen and (max-width: 599px) {
+            margin-top: .5em;
+        }
     }
     
     .card_price {
@@ -42,18 +50,17 @@ export default createGlobalStyle`
         float: right;
         position: absolute;
         right: 5px;
+        color:  ${color.grey};
         @media only screen and (max-width: 599px) {
             position: relative;
         }
     }
 
     .card_img {
-        margin-right: 4%;
-        width: 120px;
-        height: 120px;
+        margin-right: 2.5%;
         @media only screen and (max-width: 599px) {
-            margin: auto;
-            margin-bottom: 15px;
+            margin: 2.5%;
+            /* margin-bottom: 15px; */
         }
     }
 
@@ -62,7 +69,7 @@ export default createGlobalStyle`
         display: flex;
         position: relative;
         @media only screen and (max-width: 599px) {
-            flex-direction: column;
+            /* flex-direction: column; */
         }
     }
 
@@ -83,9 +90,10 @@ export default createGlobalStyle`
     }
 
     img {
-        width: 120px;
-        height: 120px;
-        border-style: solid;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-style: none;
     }
 
     .row {

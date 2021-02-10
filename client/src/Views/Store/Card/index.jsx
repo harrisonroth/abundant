@@ -21,6 +21,10 @@ export const ProductCard = props => {
   const modalStyles = {
     content: {
       borderRadius: '15px',
+      top: '10%',
+      left: '20%',
+      right: '20%',
+      bottom: '30%',
     },
   };
 
@@ -35,12 +39,11 @@ export const ProductCard = props => {
         max = size.price;
       }
     });
-    return min === max ? '$' + min : '$' + min + ' - ' + max;
+    return '$' + min;
   };
 
   return (
     <div className='card' onClick={openModal}>
-      <ProductCardStyles />
       <div className='card_data'>
         <div className='card_img'>
           <img src={props.product.imgs[0]} />

@@ -56,7 +56,9 @@ const App = props => {
       <FaShoppingCart
         size={28}
         onClick={() => {
+          console.log(showShoppingSidebar);
           setShowShoppingSidebar(!showShoppingSidebar);
+          console.log(showShoppingSidebar);
         }}
       />
     );
@@ -139,7 +141,7 @@ const App = props => {
           <Route path='/store'>
             <StoreView
               getCartIcon={getCartIcon.bind(this)}
-              setCartIsVisible={value => setShowShoppingSidebar(value)}
+              setCartIsVisible={setShowShoppingSidebar.bind(this)}
             />
           </Route>
           <Route path='/notifications'>
@@ -178,8 +180,8 @@ const App = props => {
             ) : null}
             {showShoppingSidebar ? (
               <CartDrawer
-                setIsVisible={value => setShowShoppingSidebar(value)}
-                isVisible={showSidebar}
+                setIsVisible={setShowShoppingSidebar.bind(this)}
+                isVisible={showShoppingSidebar}
                 user={user}
               />
             ) : null}

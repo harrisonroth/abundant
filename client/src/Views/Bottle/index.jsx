@@ -43,7 +43,7 @@ export const BottleView = props => {
     return (
       <div className='no_bottles'>
         {!loaded ? (
-          <FaSpinner height='40' width='40' />
+          <FaSpinner className='spinner' height='40' width='40' />
         ) : (
           'No containers are associated with your account'
         )}

@@ -4,6 +4,8 @@ import { FaShoppingCart, FaSpinner } from 'react-icons/fa';
 import { makeGet } from '../../Shared/Utils/request';
 import { ProductCard } from './Card';
 import Select from 'react-select';
+import ProductCardStyles from './Card/ProductCardStyles';
+import ProductDetailCardStyles from './Card/DetailCard/ProductDetailCardStyles';
 
 export const StoreView = props => {
   const [products, setProducts] = useState([]);
@@ -39,7 +41,7 @@ export const StoreView = props => {
   const showLoader = () => {
     return (
       <div className='loader'>
-        <FaSpinner height='40' width='40' />
+        <FaSpinner className='spinner' height='40' width='40' />
       </div>
     );
   };
@@ -47,6 +49,8 @@ export const StoreView = props => {
   return (
     <div>
       <StoreViewStyles />
+      <ProductCardStyles />
+      <ProductDetailCardStyles />
       <div className='content_header'>
         <h1>Store</h1>
         <div className='store_filter'>
